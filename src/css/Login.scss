@@ -1,0 +1,30 @@
+.login_wrap {
+  width: 100%;
+}
+.login_frame {
+  width: 400px;
+  margin: 0 auto;
+}
+.login_default_box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.login_default_box input {
+  padding-left: 5%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: solid;
+  border-color: #dee2e6;
+  border-radius: 0.5rem;
+}
+.description {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  gap: 5px;
+}
+
+.description .tag {
+  font-weight: bold;
+}

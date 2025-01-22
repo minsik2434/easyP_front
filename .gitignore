@@ -1,0 +1,32 @@
+# Node.js 관련
+node_modules/
+npm-debug.log
+yarn-error.log
+dist
+dist_electron
+
+# 운영체제 관련
+.DS_Store      # macOS에서 생성되는 파일
+Thumbs.db      # Windows에서 생성되는 파일
+
+# IDE 설정 파일
+.vscode/
+.idea/
+
+# 로그 파일
+*.log
+
+# 빌드된 파일들
+dist/
+build/
+
+# .env 파일 (환경 변수 파일)
+.env
+
+# 테스트 커버리지
+coverage/
+
+# 임시 파일
+*.tmp
+*.swp
+*.bak
