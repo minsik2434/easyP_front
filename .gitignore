@@ -2,8 +2,8 @@
 node_modules/
 npm-debug.log
 yarn-error.log
-dist
-dist_electron
+dist/
+dist_electron/
 
 # 운영체제 관련
 .DS_Store      # macOS에서 생성되는 파일

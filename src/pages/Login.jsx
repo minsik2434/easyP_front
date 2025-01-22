@@ -2,16 +2,9 @@ import "../css/Login.scss";
 
 function Login() {
   const onClick = () => {
-    fetch("http://localhost:8080/login/google", {
-      method: "GET",
-      credentials: "include", // 쿠키를 사용하려면 포함
-    })
-      .then((response) => {
-        if (response.redirected) {
-          window.location.href = response.url; // Google 로그인 페이지로 리다이렉트
-        }
-      })
-      .catch((error) => console.error("Error during login:", error));
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUrl = import.meta.env.VITE_GOOGLE_REDIRECT_URL;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&response_type=code&scope=email+profile&redirect_uri=${redirectUrl}`;
   };
   return (
     <>
