@@ -5,8 +5,8 @@ let mainWindow;
 function createWindow() {
   const __dirname = path.dirname(new URL(import.meta.url).pathname);
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1400,
+    height: 900,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
