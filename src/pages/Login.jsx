@@ -1,18 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import "../css/Login.scss";
+import "../css/Login.css";
 
 function Login() {
   const nav = useNavigate();
-  // const onClick = () => {
-  //   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  //   const redirectUrl = import.meta.env.VITE_GOOGLE_REDIRECT_URL;
-  //   const authenticationUrl = import.meta.env.VITE_GOOGLE_AUTHENTICATION_URL;
-  //   window.location.href = `${authenticationUrl}?client_id=${clientId}&response_type=code&scope=email+profile&redirect_uri=${redirectUrl}`;
-  // };
-
-  const test = () => {
-    nav("/loginLoading");
-  };
 
   return (
     <>
@@ -38,7 +28,7 @@ function Login() {
           <hr />
           <div>
             <div>
-              <button onClick={test}>구글</button>
+              <button>구글</button>
             </div>
           </div>
         </div>
