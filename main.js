@@ -18,8 +18,6 @@ function createWindow() {
   if (isDev) {
     mainWindow.loadURL("http://localhost:5173");
   } else {
-    // const indexPath = path.join(__dirname, "dist", "index.html");
-    // mainWindow.loadFile(indexPath);
     mainWindow.loadURL("http://localhost:3000");
   }
   mainWindow.webContents.openDevTools();
@@ -33,8 +31,12 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-  ipcMain.on("request-auth", () => {
-    shell.openExternal("https://www.google.com");
+  ipcMain.on("toMain", (event, data) => {
+    if (data.message === "request-auth") {
+      shell.openExternal(
+        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${data.clientId}&response_type=code&scope=email+profile&redirect_uri=${data.redirectUrl}`
+      );
+    }
   });
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

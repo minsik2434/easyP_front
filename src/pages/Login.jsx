@@ -1,9 +1,24 @@
-import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
 function Login() {
-  const nav = useNavigate();
-
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const redirectUrl = import.meta.env.VITE_GOOGLE_REDIRECT_URL;
+  const onClick = () => {
+    if (window.electron) {
+      console.log("electron");
+      window.electron.sendToMain("toMain", {
+        message: "request-auth",
+        clientId: clientId,
+        redirectUrl: redirectUrl,
+      });
+    } else {
+      console.log("web");
+      googleAuth();
+    }
+  };
+  const googleAuth = () => {
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&response_type=code&scope=email+profile&redirect_uri=${redirectUrl}`;
+  };
   return (
     <>
       <div className="login_wrap">
@@ -28,7 +43,7 @@ function Login() {
           <hr />
           <div>
             <div>
-              <button>구글</button>
+              <button onClick={onClick}>구글</button>
             </div>
           </div>
         </div>

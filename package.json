@@ -11,7 +11,8 @@
     "files": [
       "dist/**/*",
       "main.js",
-      "server.js"
+      "server.js",
+      "preload.js"
     ]
   },
   "type": "module",
