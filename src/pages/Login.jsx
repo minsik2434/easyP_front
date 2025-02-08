@@ -1,49 +1,60 @@
 import "../css/Login.css";
+import axios from "axios";
+import GoogleIcon from "../assets/icon/google.svg";
+import KakaoIcon from "../assets/icon/kakao.svg";
 
 function Login() {
-  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  const redirectUrl = import.meta.env.VITE_GOOGLE_REDIRECT_URL;
-  const onClick = () => {
-    if (window.electron) {
-      console.log("electron");
-      window.electron.sendToMain("toMain", {
-        message: "request-auth",
-        clientId: clientId,
-        redirectUrl: redirectUrl,
+  const googleAuth = async () => {
+    await axios
+      .get("http://localhost:8080/member/oauth2/google/requestUri")
+      .then((response) => {
+        window.location.href = response.data;
       });
-    } else {
-      console.log("web");
-      googleAuth();
-    }
   };
-  const googleAuth = () => {
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&response_type=code&scope=email+profile&redirect_uri=${redirectUrl}`;
+
+  const kakaoAuth = async () => {
+    await axios
+      .get("http://localhost:8080/member/oauth2/kakao/requestUri")
+      .then((response) => {
+        window.location.href = response.data;
+      });
   };
+
   return (
     <>
       <div className="login_wrap">
         <div className="login_frame">
           <div className="description">
-            <span>easyP를 이용해 프로젝트를 간편하게 진행해보세요</span>
+            {/* <span>easyP를 이용해 프로젝트를 간편하게 진행해보세요</span> */}
             <span className="tag">로그인 하기</span>
           </div>
-          <div className="login_default_box">
-            <input
-              className="input_box"
-              placeholder={"이메일을 입력해주세요"}
-              type="text"
-            />
-            <input
-              className="input_box"
-              placeholder={"비밀번호를 입력해주세요"}
-              type="password"
-            />
-            <button>로그인</button>
-          </div>
-          <hr />
-          <div>
+          <div className="oauth_button_wrap">
             <div>
-              <button onClick={onClick}>구글</button>
+              <button
+                className="gsi-material-button"
+                onClick={() => googleAuth()}
+              >
+                <div className="gsi-material-button-state"></div>
+                <div className="gsi-material-button-content-wrapper">
+                  <div className="gsi-material-button-icon">
+                    <img src={GoogleIcon} />
+                  </div>
+                  <span className="gsi-material-button-contents">
+                    Continue with Google
+                  </span>
+                </div>
+              </button>
+              <button className="kakao-button" onClick={() => kakaoAuth()}>
+                <div className="kakao-button-state"></div>
+                <div className="kakao-button-content-wrapper">
+                  <div className="kakao-button-icon">
+                    <img src={KakaoIcon} />
+                  </div>
+                  <span className="kakao-button-contents">
+                    Continue with Kakao
+                  </span>
+                </div>
+              </button>
             </div>
           </div>
         </div>
