@@ -1,47 +1,56 @@
-import axios from "axios";
+import httpService from "../utils/axiosClient";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useAuthStore } from "../utils/authStore";
+import { useMemberInfo } from "../utils/memberInfo";
 function Landing() {
-  const location = useLocation();
-  const [responseData, setResponseData] = useState("");
-  const [accessToken, setAccessToken] = useState(location.state.accessToken);
+  const [responseData, setResponseData] = useState({
+    email: "",
+    name: "",
+    profile: "",
+    role: "",
+  });
+  const { accessToken } = useAuthStore();
+  const { memberInfo } = useMemberInfo();
   useEffect(() => {
+    const email = memberInfo.email;
     const test = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/member/test", {
-          headers: {
-            Authorization: "Bearer " + location.state.accessToken,
-          },
-        });
+        const response = await httpService.get(`/member/${email}`);
         setResponseData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     test();
-  }, [location.state.accessToken]);
-
-  const refresh = async () => {
+  }, [accessToken, memberInfo.email]);
+  const accessTokenExpiredTest = async () => {
+    const email = memberInfo.email;
     try {
-      const response = await axios.post(
-        "http://localhost:8080/member/refresh",
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-        { withCredentials: true }
-      );
-      setAccessToken(response.data.accessToken);
+      const response = await httpService.get(`/member/${email}`);
+      console.log(response.data);
     } catch (error) {
-      console.error("Error data", error);
+      console.log(error);
     }
   };
   return (
     <div>
-      <span>테스트 요청 : {responseData}</span>
-      <br />
-      <span>AccessToken : {accessToken}</span>
-      <br />
-      <button onClick={() => refresh()}>새 AccessToken 받기</button>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <span>회원 이메일 : {responseData.email}</span>
+        <span>회원 이름: {responseData.name}</span>
+        <span>
+          회원 프로필 사진 :
+          <img
+            src={responseData.profile}
+            alt="Profile"
+            width={20}
+            height={20}
+          />
+        </span>
+        <br />
+        <span>AccessToken : {accessToken}</span>
+        <br />
+      </div>
+      <button onClick={() => accessTokenExpiredTest()}>재요청</button>
     </div>
   );
 }

@@ -4,20 +4,30 @@
 .login_frame {
   width: 400px;
   margin: 0 auto;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .description {
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;
+  text-align: center;
   gap: 5px;
 }
-.description .tag {
-  font-weight: bold;
-}
 
+.login_frame .tag {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.oauth_button_wrap {
+  padding-top: 5%;
+}
 .oauth_button_wrap div {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .gsi-material-button {

@@ -1,34 +1,39 @@
 import { useEffect } from "react";
-import axios from "axios";
+import httpService from "../utils/axiosClient";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthStore } from "../utils/authStore";
+import { useMemberInfo } from "../utils/memberInfo";
 function LoginLoading() {
+  const { setAccessToken } = useAuthStore();
+  const { setMemberInfo } = useMemberInfo();
   const urlParams = new URL(location.href).searchParams;
   const code = urlParams.get("code");
   const type = urlParams.get("state");
   const nav = useNavigate();
   useEffect(() => {
+    const parsingMemberInfo = (data) => {
+      const memberInfo = {
+        email: data.email,
+        name: data.name,
+        profile: data.profile,
+        role: data.role,
+      };
+      setMemberInfo(memberInfo);
+    };
     const authenticate = async () => {
       const requestBody = {
         code: code,
       };
       if (code) {
         try {
-          const response = await axios.post(
-            `http://localhost:8080/member/oauth2/${type}/login`,
+          const response = await httpService.post(
+            `/member/oauth2/${type}/login`,
             requestBody,
-            { withCredentials: true },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
+            { skipAuth: true }
           );
-          nav("/landing", {
-            state: {
-              accessToken: response.data.accessToken,
-            },
-          });
+          setAccessToken(response.data.accessToken);
+          parsingMemberInfo(response.data);
+          nav("/landing");
         } catch (error) {
           console.error("Authentication failed", error);
         }
