@@ -33,25 +33,27 @@ function Landing() {
     }
   };
   return (
-    <div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <span>회원 이메일 : {responseData.email}</span>
-        <span>회원 이름: {responseData.name}</span>
-        <span>
-          회원 프로필 사진 :
-          <img
-            src={responseData.profile}
-            alt="Profile"
-            width={20}
-            height={20}
-          />
-        </span>
-        <br />
-        <span>AccessToken : {accessToken}</span>
-        <br />
+    <>
+      <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <span>회원 이메일 : {responseData.email}</span>
+          <span>회원 이름: {responseData.name}</span>
+          <span>
+            회원 프로필 사진 :
+            <img
+              src={responseData.profile}
+              alt="Profile"
+              width={20}
+              height={20}
+            />
+          </span>
+          <br />
+          <span>AccessToken : {accessToken}</span>
+          <br />
+        </div>
+        <button onClick={() => accessTokenExpiredTest()}>재요청</button>
       </div>
-      <button onClick={() => accessTokenExpiredTest()}>재요청</button>
-    </div>
+    </>
   );
 }
 export default Landing;

@@ -2,6 +2,7 @@ import "../css/Login.css";
 import httpService from "../utils/axiosClient";
 import GoogleIcon from "../assets/icon/google.svg";
 import KakaoIcon from "../assets/icon/kakao.svg";
+import SocialLoginBt from "../components/SocialLoginBT";
 
 function Login() {
   const googleAuth = async () => {
@@ -33,31 +34,16 @@ function Login() {
         <span className="tag">로그인 하기</span>
         <div className="oauth_button_wrap">
           <div>
-            <button
-              className="gsi-material-button"
-              onClick={() => googleAuth()}
-            >
-              <div className="gsi-material-button-state"></div>
-              <div className="gsi-material-button-content-wrapper">
-                <div className="gsi-material-button-icon">
-                  <img src={GoogleIcon} />
-                </div>
-                <span className="gsi-material-button-contents">
-                  Continue with Google
-                </span>
-              </div>
-            </button>
-            <button className="kakao-button" onClick={() => kakaoAuth()}>
-              <div className="kakao-button-state"></div>
-              <div className="kakao-button-content-wrapper">
-                <div className="kakao-button-icon">
-                  <img src={KakaoIcon} />
-                </div>
-                <span className="kakao-button-contents">
-                  Continue with Kakao
-                </span>
-              </div>
-            </button>
+            <SocialLoginBt
+              onClick={googleAuth}
+              Icon={GoogleIcon}
+              buttonType="google"
+            />
+            <SocialLoginBt
+              onClick={kakaoAuth}
+              Icon={KakaoIcon}
+              buttonType="kakao"
+            />
           </div>
         </div>
       </div>

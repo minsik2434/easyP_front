@@ -33,13 +33,13 @@ function LoginLoading() {
           );
           setAccessToken(response.data.accessToken);
           parsingMemberInfo(response.data);
-          nav("/landing");
+          nav("/project");
         } catch (error) {
           console.error("Authentication failed", error);
         }
       }
     };
     authenticate();
-  }, [code, nav]);
+  }, [code, nav, setAccessToken, setMemberInfo, type]);
 }
 export default LoginLoading;
