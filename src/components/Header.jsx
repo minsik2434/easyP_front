@@ -1,12 +1,15 @@
 import "../css/header.css";
 import { useMemberInfo } from "../utils/memberInfo";
 import SearchIcon from "../assets/icon/glass.svg";
+import SideClose from "../assets/icon/side-close.svg";
 import XIcon from "../assets/icon/x.svg";
 import Alarm from "../assets/icon/alarm.svg";
 import Logo from "../assets/icon/Logo.svg";
+import SideOpen from "../assets/icon/side-open.svg";
 import { useEffect, useRef, useState } from "react";
 import ProfileModal from "./modals/ProfileModal";
-function Header() {
+import PropTypes from "prop-types";
+function Header({ isSidebarOpen, toggleSidebar }) {
   const { memberInfo } = useMemberInfo();
   const [searchValue, setSearchValue] = useState("");
   const [profileModal, setProfileModal] = useState(false);
@@ -37,9 +40,22 @@ function Header() {
     <>
       <div className="header-container">
         <div className="main-nav-bar">
+          <div className="side-bar-button-wrapper">
+            <button className="open-button" onClick={() => toggleSidebar()}>
+              {isSidebarOpen ? (
+                <div className="side-bar-icon">
+                  <img src={SideClose} />
+                </div>
+              ) : (
+                <div className="side-bar-icon">
+                  <img src={SideOpen} />
+                </div>
+              )}
+            </button>
+          </div>
           <div className="left-content">
             <button className="logo-button">
-              <div>
+              <div className="logo-button-icon">
                 <img src={Logo} />
               </div>
               <span>EasyP</span>
@@ -110,5 +126,8 @@ function Header() {
     </>
   );
 }
-
+Header.propTypes = {
+  isSidebarOpen: PropTypes.string.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+};
 export default Header;

@@ -1,0 +1,35 @@
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  border-bottom: solid;
+  background-color: white;
+  border-color: #dee2e6;
+}
+.side {
+  position: fixed;
+  top: 61px;
+  left: 0;
+  right: 0;
+  width: 77px;
+  height: calc(100vh - 61px);
+  border-right: solid;
+  border-color: #dee2e6;
+  transition: width 0.3s ease;
+}
+
+.side.open {
+  width: 250px;
+}
+.main {
+  margin-top: 61px;
+  margin-left: 77px;
+  padding: 20px;
+  z-index: 100;
+  transition: margin-left 0.3s ease;
+  height: 120vh;
+}
+
+.main.open {
+  margin-left: 250px;
+}

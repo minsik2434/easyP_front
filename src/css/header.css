@@ -5,12 +5,24 @@
 .header-container .main-nav-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
-  padding: 10px 0 10px 0;
 }
 .left-content {
-  padding-left: 20px;
+  display: flex;
+  width: 15%;
+  align-items: center;
+}
+.center-content {
+  width: 70%;
+  display: block;
+  padding: 10px 5px;
+}
+.right-content {
+  display: flex;
+  gap: 1rem;
+  padding-right: 90px;
+  width: 15%;
+  padding: 10px 5px;
 }
 .logo-button {
   all: unset;
@@ -18,19 +30,14 @@
   display: flex;
   align-items: center;
 }
+.logo-button .logo-button-icon {
+  align-items: center;
+  display: flex;
+}
+
 .logo-button span {
   font-weight: bold;
   font-size: 1.25rem;
-}
-
-.center-content {
-  width: 65%;
-  display: block;
-}
-.right-content {
-  display: flex;
-  gap: 1rem;
-  padding-right: 90px;
 }
 
 .profile-wrapper,
@@ -65,13 +72,13 @@
 }
 
 .info-icon img {
-  width: 100%;
+  width: inherit;
   height: auto;
   border-radius: inherit;
 }
 .search-bar-wrapper {
   display: flex;
-  border: solid;
+  border: solid 0.5px;
   border-color: #ced4da;
   border-radius: 10px;
   align-items: stretch;
@@ -155,6 +162,29 @@
 
 .profile-wrapper .modal {
   position: absolute;
-  top: 33px;
+  top: 39px;
   right: 0;
+}
+
+.side-bar-button-wrapper .open-button {
+  all: unset;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 100%;
+}
+
+.side-bar-button-wrapper .open-button:hover {
+  background-color: #f1f3f5;
+}
+.side-bar-button-wrapper .open-button:not(:disabled):active {
+  background-color: #ced4da;
+}
+.side-bar-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-bar-button-wrapper {
+  padding: 0px 16px;
 }
