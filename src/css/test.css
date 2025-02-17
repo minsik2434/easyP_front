@@ -5,6 +5,7 @@
   border-bottom: solid;
   background-color: white;
   border-color: #dee2e6;
+  z-index: 10;
 }
 .side {
   position: fixed;
@@ -17,17 +18,14 @@
   border-color: #dee2e6;
   transition: width 0.3s ease;
 }
-
 .side.open {
   width: 250px;
 }
 .main {
   margin-top: 61px;
   margin-left: 77px;
-  padding: 20px;
-  z-index: 100;
+  padding: 10px;
   transition: margin-left 0.3s ease;
-  height: 120vh;
 }
 
 .main.open {

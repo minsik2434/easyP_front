@@ -37,6 +37,6 @@ function SideBar({ isSidebarOpen }) {
 }
 
 SideBar.propTypes = {
-  isSidebarOpen: PropTypes.string.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
 };
 export default SideBar;

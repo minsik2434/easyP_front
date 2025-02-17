@@ -127,7 +127,7 @@ function Header({ isSidebarOpen, toggleSidebar }) {
   );
 }
 Header.propTypes = {
-  isSidebarOpen: PropTypes.string.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
 };
 export default Header;
