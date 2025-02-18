@@ -13,6 +13,7 @@
   left: 0;
   right: 0;
   width: 77px;
+  z-index: 10;
   height: calc(100vh - 61px);
   border-right: solid;
   border-color: #dee2e6;

@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import "../css/test.css";
 import ProjectList from "../components/ProjectList";
-function Project() {
+function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -22,4 +22,4 @@ function Project() {
     </div>
   );
 }
-export default Project;
+export default Home;

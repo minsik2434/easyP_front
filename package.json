@@ -27,6 +27,7 @@
     "start": "npm run dev & npm run electron"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "axios": "^1.7.9",
     "concurrently": "^9.1.2",
     "electron-is-dev": "latest",

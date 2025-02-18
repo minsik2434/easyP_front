@@ -1,6 +1,9 @@
 import "../css/projectlist.css";
 import Arrow from "../assets/icon/arrow.svg";
+import List from "../assets/icon/list.svg";
+import Grid from "../assets/icon/grid.svg";
 import { useEffect, useRef, useState } from "react";
+import Project from "./Project";
 function ProjectList() {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("정렬 선택");
@@ -31,6 +34,18 @@ function ProjectList() {
     <>
       <div className="option-item-container">
         <div className="option-item">
+          <button className="view-button">
+            <div className="view-button-icon">
+              <img src={Grid} />
+            </div>
+          </button>
+          <button className="view-button">
+            <div className="view-button-icon">
+              <img src={List} />
+            </div>
+          </button>
+        </div>
+        <div className="option-item">
           <div className="select" ref={selectRef}>
             <div
               className="select-default"
@@ -56,11 +71,13 @@ function ProjectList() {
         </div>
         <div className="option-item">
           <button className="create-button">
-            <div className="test">생성하기</div>
+            <span>생성하기</span>
           </button>
         </div>
       </div>
-      <div>main Project</div>
+      <div>
+        <Project />
+      </div>
     </>
   );
 }
