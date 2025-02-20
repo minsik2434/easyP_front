@@ -8,6 +8,12 @@
 
 .side-bar-content-wrapper {
   display: flex;
+  user-select: none;
+}
+
+.side-bar-content-wrapper.dragging {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
 }
 
 .side-bar-content-button {

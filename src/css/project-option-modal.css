@@ -1,0 +1,13 @@
+.project-option-modal-container {
+  width: 200px;
+  border: solid 0.5px;
+  border-color: #e9ecef;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.project-option-modal-container .option-wrapper {
+  display: flex;
+  flex-direction: column;
+}

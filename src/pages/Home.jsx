@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
-import "../css/test.css";
+import styles from "../css/home.module.css";
 import ProjectList from "../components/ProjectList";
 function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -9,14 +9,14 @@ function Home() {
     setIsSidebarOpen(!isSidebarOpen);
   };
   return (
-    <div className="testcontiner">
-      <div className="header">
+    <div>
+      <div className={styles.header}>
         <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       </div>
-      <div className={`side ${isSidebarOpen ? "open" : ""}`}>
+      <div className={`${styles.side} ${isSidebarOpen ? styles.open : ""}`}>
         <SideBar isSidebarOpen={isSidebarOpen} />
       </div>
-      <div className={`main ${isSidebarOpen ? "open" : ""}`}>
+      <div className={`${styles.main} ${isSidebarOpen ? styles.open : ""}`}>
         <ProjectList />
       </div>
     </div>

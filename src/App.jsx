@@ -1,3 +1,4 @@
+import "./app.css";
 import Login from "./pages/Login";
 import { Route, Routes } from "react-router-dom";
 import LoginLoading from "./pages/LoginLoading";

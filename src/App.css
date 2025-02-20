@@ -1,0 +1,24 @@
+:root {
+  --border-color: #dee2e6;
+  --primary-color: #3498db;
+  --secondary-color: #f1f3f5;
+}
+
+.default-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.default-icon img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.icon-button:hover {
+  background-color: #f1f3f5;
+}
+
+.icon-button:not(:disabled):active {
+  background-color: #dee2e6;
+}

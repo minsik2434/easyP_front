@@ -1,4 +1,4 @@
-.modal-container {
+.profile-modal-container {
   width: 300px;
   border: solid 0.5px;
   border-color: #e9ecef;
@@ -7,7 +7,7 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
-.member-info-wrapper {
+.profile-modal-container .member-info-wrapper {
   display: flex;
   padding: 15px;
   gap: 1rem;

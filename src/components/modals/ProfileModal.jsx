@@ -1,12 +1,20 @@
-import "../../css/modal.css";
+import "../../css/profile-modal.css";
 import { useMemberInfo } from "../../utils/memberInfo";
 import Logout from "../../assets/icon/logout.svg";
 import Setting from "../../assets/icon/setting.svg";
 import Account from "../../assets/icon/account.svg";
-function ProfileModal() {
+import useLockScroll from "../../hooks/useLockScroll";
+import { forwardRef, useRef } from "react";
+import useClickOutside from "../../hooks/useClickOutSide";
+import PropTypes from "prop-types";
+const ProfileModal = forwardRef(({ setProfileModal }, ref) => {
+  useLockScroll(true);
+  const modalRef = useRef(null);
   const { memberInfo } = useMemberInfo();
+
+  useClickOutside([ref, modalRef], () => setProfileModal(false));
   return (
-    <div className="modal-container">
+    <div className="profile-modal-container" ref={modalRef}>
       <div className="member-info-wrapper">
         <div className="profile-icon">
           <img src={memberInfo.profile} />
@@ -38,5 +46,9 @@ function ProfileModal() {
       </div>
     </div>
   );
-}
+});
+ProfileModal.propTypes = {
+  setProfileModal: PropTypes.func.isRequired,
+};
+ProfileModal.displayName = "ProfileModal";
 export default ProfileModal;

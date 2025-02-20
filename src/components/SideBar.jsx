@@ -5,14 +5,12 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useState } from "react";
 function SideBar({ isSidebarOpen }) {
   const [items, setItems] = useState([
-    { id: "item-1", content: "title2" },
-    { id: "item-2", content: "title" },
+    { id: "item-1", content: "title1" },
+    { id: "item-2", content: "title2" },
+    { id: "item-3", content: "title3" },
   ]);
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return;
-    if (result.source.index === result.destination.index) return;
-
+  const onDragEnd = (result) => {
     const newItems = Array.from(items);
     const [removed] = newItems.splice(result.source.index, 1);
     newItems.splice(result.destination.index, 0, removed);
@@ -20,7 +18,7 @@ function SideBar({ isSidebarOpen }) {
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="sidebar-droppable">
         {(provided) => (
           <div
@@ -30,9 +28,11 @@ function SideBar({ isSidebarOpen }) {
           >
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
-                {(provided) => (
+                {(provided, snapshot) => (
                   <div
-                    className="side-bar-content-wrapper"
+                    className={`side-bar-content-wrapper ${
+                      snapshot.isDragging ? "dragging" : ""
+                    }`}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
