@@ -1,0 +1,43 @@
+.modalContainer {
+  width: 300px;
+}
+
+.infoWrapper {
+  display: flex;
+  padding: 15px;
+  gap: 1rem;
+  border-bottom: solid;
+  border-color: #e9ecef;
+}
+
+.profileIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 100%;
+}
+
+.profileIcon img {
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.menuButton {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  gap: 8px;
+}
