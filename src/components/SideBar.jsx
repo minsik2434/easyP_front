@@ -1,4 +1,4 @@
-import "../css/sidebar.css";
+import styles from "../css/sidebar.module.css";
 import Dot from "../assets/icon/dot.svg";
 import PropTypes from "prop-types";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
@@ -22,7 +22,7 @@ function SideBar({ isSidebarOpen }) {
       <Droppable droppableId="sidebar-droppable">
         {(provided) => (
           <div
-            className="side-bar-container"
+            className={styles.container}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -30,23 +30,23 @@ function SideBar({ isSidebarOpen }) {
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, snapshot) => (
                   <div
-                    className={`side-bar-content-wrapper ${
-                      snapshot.isDragging ? "dragging" : ""
+                    className={`${styles.contentWrapper} ${
+                      snapshot.isDragging ? styles.dragging : ""
                     }`}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
                     <div
-                      className={`side-bar-content-button ${
-                        isSidebarOpen ? "open" : ""
+                      className={`${styles.contentButton} ${
+                        isSidebarOpen ? styles.open : ""
                       }`}
                     >
-                      <div className="side-bar-content-icon">
+                      <div className="default-icon">
                         <img src={Dot} alt="icon" />
                       </div>
                       {isSidebarOpen && (
-                        <div className="side-bar-content-title">
+                        <div className={styles.sideBarContentTitle}>
                           {item.content}
                         </div>
                       )}

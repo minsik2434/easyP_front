@@ -1,4 +1,3 @@
-import "../../css/project-option-modal.css";
 import styles from "../../css/project-option.module.css";
 import PropTypes from "prop-types";
 import { forwardRef } from "react";

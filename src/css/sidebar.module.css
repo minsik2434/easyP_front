@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  display: flex;
+  user-select: none;
+}
+
+.contentWrapper.dragging {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.contentButton {
+  all: unset;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  padding: 16px 22px;
+  border-radius: 16px;
+  gap: 16px;
+}
+
+.contentButton.open {
+  justify-content: start;
+}
+.contentButton:hover {
+  background-color: #f1f3f5;
+  transition: background-color 0.3s ease;
+}
+
+.contentButton:not(:disabled):active {
+  background-color: #e9ecef;
+}
+
+.sideBarContentTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
