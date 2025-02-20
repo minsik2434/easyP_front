@@ -1,0 +1,99 @@
+.optionItemContainer {
+  position: sticky;
+  top: 61px;
+  display: flex;
+  justify-content: end;
+  background-color: white;
+  z-index: 9;
+}
+
+.optionItem {
+  display: flex;
+  align-items: stretch;
+  padding: 10px;
+}
+
+.optionItem .viewButton {
+  all: unset;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.optionItem .viewButton.select {
+  background-color: #f1f3f5;
+}
+
+.optionItem .viewButton:hover {
+  background-color: #f1f3f5;
+}
+
+.optionItem .viewButton:active {
+  background-color: #e9ecef;
+}
+
+.optionItem .selectBox {
+  position: relative;
+  width: 100px;
+  user-select: none;
+}
+
+.optionItem .selectBox .defaultOption {
+  display: flex;
+  border: 0.5px solid;
+  border-color: #ced4da;
+  border-radius: 5px;
+  width: inherit;
+  align-items: center;
+  justify-content: space-around;
+  padding: 6px 0;
+  cursor: pointer;
+  transition: background-color 0.2 ease-in-out;
+}
+
+.selectBox .iconSize {
+  gap: 2px;
+  width: 1rem;
+  height: 1rem;
+}
+
+.selectBox .selectOptionList {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  border: 0.5px solid #ced4da;
+  z-index: 1;
+  background-color: white;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  width: inherit;
+  list-style: none;
+}
+
+.selectBox .selectOptionList li {
+  border-radius: inherit;
+  cursor: pointer;
+  margin: 0;
+  padding: 6px 10px;
+}
+
+.optionItem .createButton {
+  all: unset;
+  cursor: pointer;
+  border: 0.5px solid #ced4da;
+  border-radius: 5px;
+  padding: 0px 6px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.projectListContainer {
+  display: grid;
+  gap: 30px;
+  padding: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 0.85fr));
+  grid-auto-rows: minmax(200px, 300px);
+  max-width: 100%; /* 전체 컨테이너의 최대 너비 설정(필요에 따라 조절) */
+  /* margin: 0 auto; 중앙 정렬 */
+  justify-content: center;
+}

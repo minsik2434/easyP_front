@@ -12,10 +12,12 @@
 
 .default-icon img {
   -webkit-user-drag: none;
+  width: inherit;
+  height: inherit;
   user-select: none;
 }
 
-.icon-button:hover {
+.icon-button:not(:disabled):hover {
   background-color: #f1f3f5;
 }
 

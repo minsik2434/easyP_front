@@ -1,9 +1,11 @@
+import "../../css/project-option-modal.css";
+import styles from "../../css/project-option.module.css";
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
-import "../../css/project-option-modal.css";
+
 const ProjectOptionModal = forwardRef(({ setProjectOptionModal }, ref) => {
   return (
-    <div className="project-option-modal-container">
+    <div className={`${styles.modalContainer} modal-container`}>
       <div className="option-wrapper">
         <div>asdfasdf</div>
         <div>asdfasdf</div>

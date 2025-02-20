@@ -1,4 +1,4 @@
-import "../css/projectlist.css";
+import styles from "../css/projectlist.module.css";
 import Arrow from "../assets/icon/arrow.svg";
 import List from "../assets/icon/list.svg";
 import Grid from "../assets/icon/grid.svg";
@@ -9,11 +9,11 @@ import useClickOutside from "../hooks/useClickOutSide";
 function ProjectList() {
   const [viewSelect, setViewSelect] = useState("grid");
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("정렬 선택");
+  const [selectedSort, setSelectedSort] = useState("정렬 선택");
   const selectButtonRef = useRef(null);
   const selectBodyRef = useRef(null);
   const handleOptionClick = (option) => {
-    setSelected(option.label);
+    setSelectedSort(option.label);
     setIsOpen(false);
   };
   useLockScroll(isOpen);
@@ -26,43 +26,51 @@ function ProjectList() {
   useClickOutside([selectButtonRef, selectBodyRef], () => setIsOpen(false));
   return (
     <>
-      <div className="option-item-container">
-        <div className="option-item">
+      <div className={styles.optionItemContainer}>
+        <div className={styles.optionItem}>
           <button
-            className={`view-button ${viewSelect === "list" ? "select" : ""} `}
+            className={`${styles.viewButton} ${
+              viewSelect === "list" ? styles.select : ""
+            }`}
             onClick={() => setViewSelect("list")}
           >
-            <div className="view-button-icon">
+            <div className="default-icon">
               <img src={Grid} />
             </div>
           </button>
           <button
-            className={`view-button ${viewSelect === "grid" ? "select" : ""} `}
+            className={` ${styles.viewButton} ${
+              viewSelect === "grid" ? styles.select : ""
+            }`}
             onClick={() => setViewSelect("grid")}
           >
-            <div className="view-button-icon">
+            <div className="default-icon">
               <img src={List} />
             </div>
           </button>
         </div>
-        <div className="option-item">
-          <div className="select">
+        <div className={styles.optionItem}>
+          <div className={styles.selectBox}>
             <div
-              className="select-default"
+              className={`${styles.defaultOption} icon-button`}
               onClick={() => {
                 setIsOpen((prev) => !prev);
               }}
               ref={selectButtonRef}
             >
-              <span>{selected}</span>
-              <div className="select-icon">
+              <span>{selectedSort}</span>
+              <div className={`default-icon ${styles.iconSize}`}>
                 <img src={Arrow} />
               </div>
             </div>
             {isOpen && (
-              <ul className="select-option-list" ref={selectBodyRef}>
+              <ul className={styles.selectOptionList} ref={selectBodyRef}>
                 {options.map((option, index) => (
-                  <li key={index} onClick={() => handleOptionClick(option)}>
+                  <li
+                    className="icon-button"
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                  >
                     {option.label}
                   </li>
                 ))}
@@ -70,13 +78,13 @@ function ProjectList() {
             )}
           </div>
         </div>
-        <div className="option-item">
-          <button className="create-button">
+        <div className={styles.optionItem}>
+          <button className={`${styles.createButton} icon-button`}>
             <span>생성하기</span>
           </button>
         </div>
       </div>
-      <div className="project-list-container">
+      <div className={styles.projectListContainer}>
         <Project />
         <Project />
         <Project />
