@@ -39,6 +39,7 @@
 .masterIconSize {
   width: 2.5rem;
   height: 2.5rem;
+  border-radius: 100%;
 }
 
 .projectDescription .info {
@@ -50,6 +51,12 @@
 
 .title {
   font-weight: bold;
+}
+
+.dateField {
+  font-weight: bold;
+  font-size: smaller;
+  color: gray;
 }
 
 .descriptionWrapper .settingButton {

@@ -31,9 +31,10 @@ function LoginLoading() {
             requestBody,
             { skipAuth: true }
           );
+          console.log(response.data.accessToken);
           setAccessToken(response.data.accessToken);
           parsingMemberInfo(response.data);
-          nav("/project");
+          nav("/");
         } catch (error) {
           console.error("Authentication failed", error);
         }

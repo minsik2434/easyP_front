@@ -78,6 +78,11 @@
   padding: 6px 10px;
 }
 
+.orderBox {
+  border-top: 0.5px solid #ced4da;
+  border-radius: inherit;
+}
+
 .optionItem .createButton {
   all: unset;
   cursor: pointer;
@@ -96,4 +101,13 @@
   max-width: 100%; /* 전체 컨테이너의 최대 너비 설정(필요에 따라 조절) */
   /* margin: 0 auto; 중앙 정렬 */
   justify-content: center;
+}
+.orderButtonWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkIconSize {
+  width: 1rem;
+  height: 1rem;
 }

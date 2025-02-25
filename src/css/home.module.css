@@ -12,7 +12,7 @@
   top: 61px;
   left: 0;
   right: 0;
-  width: 77px;
+  width: 95px;
   z-index: 10;
   height: calc(100vh - 61px);
   border-right: solid;
@@ -24,7 +24,7 @@
 }
 .main {
   margin-top: 61px;
-  margin-left: 77px;
+  margin-left: 95px;
   padding: 10px;
   transition: margin-left 0.3s ease;
 }
