@@ -96,8 +96,8 @@
   display: grid;
   gap: 30px;
   padding: 50px;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 0.85fr));
-  grid-auto-rows: minmax(200px, 300px);
+  grid-template-columns: repeat(auto-fit, minmax(350px, 0.7fr));
+  grid-auto-rows: minmax(200px, 330px);
   max-width: 100%; /* 전체 컨테이너의 최대 너비 설정(필요에 따라 조절) */
   /* margin: 0 auto; 중앙 정렬 */
   justify-content: center;

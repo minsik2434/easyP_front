@@ -56,3 +56,13 @@
   justify-content: center;
   align-items: center;
 }
+
+.category {
+  padding: 15px 15px 0 15px;
+}
+
+.categoryWrapper {
+  border-bottom: solid gray;
+  padding-bottom: 5px;
+  font-size: 18px;
+}

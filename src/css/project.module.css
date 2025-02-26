@@ -11,19 +11,21 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   user-select: none;
   justify-content: stretch;
 }
 
 .projectImgSize {
   width: 100%;
-  height: 70%;
+  height: 80%;
+  border-radius: 10px;
+  align-items: start;
 }
 
 .descriptionWrapper {
   display: flex;
   position: relative;
+  height: 20%;
   flex-direction: column;
 }
 
@@ -68,9 +70,14 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.descriptionWrapper .modal {
+.descriptionWrapper .modalBottom {
   position: absolute;
   top: 34px;
+  right: 0;
+}
+.descriptionWrapper .modalTop {
+  position: absolute;
+  bottom: 60px;
   right: 0;
 }
 
