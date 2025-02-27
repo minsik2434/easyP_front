@@ -20,14 +20,8 @@
 
 .leftContent {
   display: flex;
-  width: 15%;
+  width: 85%;
   align-items: center;
-}
-
-.centerContent {
-  width: 70%;
-  display: block;
-  padding: 10px 5px;
 }
 
 .rightContent {

@@ -1,0 +1,56 @@
+.container {
+  width: 600px;
+  border-radius: 15px;
+  padding: 30px 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  gap: 20px;
+}
+
+.headText {
+  font-size: 25px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.titleWrapper {
+  background-color: #e9ecef;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.title input {
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  background-color: #e9ecef;
+  outline: none;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+}
+
+.descriptionWrapper {
+  background-color: #e9ecef;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  height: 100px;
+}
+
+.descriptionWrapper textarea {
+  outline: none;
+  width: 100%;
+  resize: none;
+  background-color: #e9ecef;
+  border: none;
+}

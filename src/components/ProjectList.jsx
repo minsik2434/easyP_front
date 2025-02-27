@@ -2,6 +2,8 @@ import styles from "../css/projectlist.module.css";
 import Arrow from "../assets/icon/arrow.svg";
 import List from "../assets/icon/list.svg";
 import Grid from "../assets/icon/grid.svg";
+import XIcon from "../assets/icon/x.svg";
+import SearchIcon from "../assets/icon/glass.svg";
 import { useEffect, useRef, useState } from "react";
 import SquareProject from "./SquareProject";
 import useLockScroll from "../hooks/useLockScroll";
@@ -10,9 +12,18 @@ import Check from "../assets/icon/check.svg";
 import { useMemberInfo } from "../utils/memberInfo";
 import useClickOutside from "../hooks/useClickOutSide";
 import FlatProject from "./FlatProject";
+import CreateProjectModal from "./modals/CreateProjectModal";
 function ProjectList() {
   const [viewSelect, setViewSelect] = useState("grid");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [nameParam, setNameParam] = useState("");
+  const handleKeydownSearch = (e) => {
+    if (e.key === "Enter") {
+      setNameParam(searchValue);
+    }
+  };
   const [selectedSort, setSelectedSort] = useState({
     label: "정렬 선택",
     value: "id",
@@ -30,38 +41,66 @@ function ProjectList() {
   const { memberInfo } = useMemberInfo();
   const handleOptionClick = (option) => {
     setSelectedSort(option);
-    setIsOpen(false);
+    setIsSortOpen(false);
   };
 
   const handleSortDirectionClick = (direction) => {
     setOrderDirection(direction);
-    setIsOpen(false);
+    setIsSortOpen(false);
   };
 
-  useLockScroll(isOpen);
+  useLockScroll(isSortOpen);
   const options = [
     { label: "정렬선택", value: "id" },
     { label: "이름순", value: "name" },
     { label: "변경순", value: "updateAt" },
     { label: "생성일순", value: "createAt" },
   ];
-  useClickOutside([selectButtonRef, selectBodyRef], () => setIsOpen(false));
+  useClickOutside([selectButtonRef, selectBodyRef], () => setIsSortOpen(false));
   useEffect(() => {
     const getProjectList = async () => {
       try {
-        const response = await httpService.get(
-          `/member/${memberInfo.email}/project?sort=${selectedSort.value},${orderDirection}`
-        );
+        let request = `/member/${memberInfo.email}/project?sort=${selectedSort.value},${orderDirection}`;
+        if (nameParam) {
+          request = request + `&name=${nameParam}`;
+        }
+        const response = await httpService.get(request);
         setBelongProjectReponse(response.data);
       } catch (error) {
         console.log(error);
       }
     };
     getProjectList();
-  }, [memberInfo.email, orderDirection, selectedSort.value]);
+  }, [memberInfo.email, nameParam, orderDirection, selectedSort.value]);
   return (
     <>
       <div className={styles.optionItemContainer}>
+        <div className={styles.centerContent}>
+          <div className={styles.searchBarWrapper}>
+            <button className={styles.searchButton}>
+              <div className={`${styles.searchBarButtonIcon} default-icon`}>
+                <img src={SearchIcon} />
+              </div>
+            </button>
+            <input
+              type="text"
+              onChange={(e) => setSearchValue(e.target.value)}
+              value={searchValue}
+              onKeyDown={handleKeydownSearch}
+              placeholder="검색창"
+            />
+            <button
+              className={`${styles.searchButton} ${
+                searchValue ? "" : styles.noValue
+              }`}
+              onClick={() => setSearchValue("")}
+            >
+              <div className={`${styles.searchBarButtonIcon} default-icon`}>
+                <img src={XIcon} />
+              </div>
+            </button>
+          </div>
+        </div>
         <div className={styles.optionItem}>
           <button
             className={`${styles.viewButton} ${
@@ -89,7 +128,7 @@ function ProjectList() {
             <div
               className={`${styles.defaultOption} icon-button`}
               onClick={() => {
-                setIsOpen((prev) => !prev);
+                setIsSortOpen((prev) => !prev);
               }}
               ref={selectButtonRef}
             >
@@ -98,7 +137,7 @@ function ProjectList() {
                 <img src={Arrow} />
               </div>
             </div>
-            {isOpen && (
+            {isSortOpen && (
               <ul className={styles.selectOptionList} ref={selectBodyRef}>
                 {options.map((option, index) => (
                   <li
@@ -146,7 +185,10 @@ function ProjectList() {
           </div>
         </div>
         <div className={styles.optionItem}>
-          <button className={`${styles.createButton} icon-button`}>
+          <button
+            className={`${styles.createButton} icon-button`}
+            onClick={() => setIsCreateOpen((prev) => !prev)}
+          >
             <span>생성하기</span>
           </button>
         </div>
@@ -179,6 +221,13 @@ function ProjectList() {
           {belongProjectResponse.projectDtoList.map((project, index) => (
             <FlatProject key={index} project={project} />
           ))}
+        </div>
+      )}
+      {isCreateOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={`${styles.createModal} modal-container`}>
+            <CreateProjectModal setIsCreateOpen={setIsCreateOpen} />
+          </div>
         </div>
       )}
     </>

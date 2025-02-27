@@ -43,37 +43,6 @@ function Header({ isSidebarOpen, toggleSidebar }) {
             <span>EasyP</span>
           </button>
         </div>
-        <div className={styles.centerContent}>
-          <div className={styles.searchBarWrapper}>
-            <button
-              className={styles.button}
-              onClick={() => {
-                inputRef.current.focus();
-              }}
-            >
-              <div className={`${styles.searchBarButtonIcon} default-icon`}>
-                <img src={SearchIcon} />
-              </div>
-            </button>
-            <input
-              type="text"
-              onChange={(e) => setSearchValue(e.target.value)}
-              value={searchValue}
-              ref={inputRef}
-              placeholder="검색창"
-            />
-            <button
-              className={`${styles.button} ${
-                searchValue ? "" : styles.noValue
-              }`}
-              onClick={() => setSearchValue("")}
-            >
-              <div className={`${styles.searchBarButtonIcon} default-icon`}>
-                <img src={XIcon} />
-              </div>
-            </button>
-          </div>
-        </div>
         <div className={styles.rightContent}>
           <div className={styles.iconButtonWrapper}>
             <button className={styles.iconButton}>
