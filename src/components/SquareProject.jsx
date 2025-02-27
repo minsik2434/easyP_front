@@ -1,11 +1,11 @@
-import styles from "../css/project.module.css";
+import styles from "../css/square-project.module.css";
 import Dot from "../assets/icon/dot.svg";
 import { useEffect, useRef, useState } from "react";
 import ProjectOptionModal from "./modals/ProjectOptionModal";
 import { parseDateTime } from "../utils/parseDateTime";
 import httpService from "../utils/axiosClient";
 import { useAppStore } from "../utils/useAppStore";
-function Project({ project }) {
+function SquareProject({ project }) {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const buttonRef = useRef();
   const [modalPosition, setModalPosition] = useState("bottom");
@@ -95,4 +95,4 @@ function Project({ project }) {
   );
 }
 
-export default Project;
+export default SquareProject;

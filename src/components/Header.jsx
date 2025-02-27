@@ -15,6 +15,7 @@ function Header({ isSidebarOpen, toggleSidebar }) {
   const [profileModal, setProfileModal] = useState(false);
   const profileButtonRef = useRef();
   const inputRef = useRef();
+
   return (
     <>
       <div className={styles.container}>

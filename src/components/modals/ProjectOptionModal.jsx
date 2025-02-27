@@ -1,5 +1,6 @@
 import styles from "../../css/project-option.module.css";
 import Bookmark from "../../assets/icon/bookmark.svg";
+import Bookmark2 from "../../assets/icon/bookmark2.svg";
 import Delete from "../../assets/icon/delete.svg";
 import useLockScroll from "../../hooks/useLockScroll";
 import PropTypes from "prop-types";
@@ -29,7 +30,11 @@ const ProjectOptionModal = forwardRef(
             }}
           >
             <div className="default-icon">
-              <img src={Bookmark} />
+              {isBookmarking === false ? (
+                <img src={Bookmark} />
+              ) : (
+                <img src={Bookmark2} />
+              )}
             </div>
             {isBookmarking === false ? (
               <span>즐겨찾기</span>

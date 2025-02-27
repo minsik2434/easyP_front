@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  border-bottom: solid 0.5px #ced4da;
+}
+
+.projectImgSize {
+  width: 8rem;
+  height: 4rem;
+  border-radius: 8px;
+  padding: 10px 0;
+}
+.descriptionWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.descriptionWrapper span {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.profileImgSize {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 100%;
+}
+
+.updateWrapper {
+  width: 20%;
+  display: flex;
+  align-items: center;
+}
+.iconButtonWrapper {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.projectWrapper {
+  display: flex;
+  gap: 30px;
+  width: 60%;
+}
+.iconButton {
+  all: unset;
+  cursor: pointer;
+  border-radius: 100%;
+}
+
+.iconButtonImgSize {
+  width: 2rem;
+  height: 2rem;
+}
+
+.dateField {
+  font-weight: bold;
+  font-size: smaller;
+  color: gray;
+}

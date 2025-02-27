@@ -3,12 +3,13 @@ import Arrow from "../assets/icon/arrow.svg";
 import List from "../assets/icon/list.svg";
 import Grid from "../assets/icon/grid.svg";
 import { useEffect, useRef, useState } from "react";
-import Project from "./Project";
+import SquareProject from "./SquareProject";
 import useLockScroll from "../hooks/useLockScroll";
 import httpService from "../utils/axiosClient";
 import Check from "../assets/icon/check.svg";
 import { useMemberInfo } from "../utils/memberInfo";
 import useClickOutside from "../hooks/useClickOutSide";
+import FlatProject from "./FlatProject";
 function ProjectList() {
   const [viewSelect, setViewSelect] = useState("grid");
   const [isOpen, setIsOpen] = useState(false);
@@ -150,11 +151,36 @@ function ProjectList() {
           </button>
         </div>
       </div>
-      <div className={styles.projectListContainer}>
-        {belongProjectResponse.projectDtoList.map((project, index) => (
-          <Project key={index} project={project} />
-        ))}
-      </div>
+      {viewSelect === "grid" ? (
+        <div
+          className={`${styles.squareProjectListContainer} ${
+            belongProjectResponse.projectDtoList.length < 3
+              ? styles.lessThree
+              : ""
+          }`}
+        >
+          {belongProjectResponse.projectDtoList.map((project, index) => (
+            <SquareProject key={index} project={project} />
+          ))}
+        </div>
+      ) : (
+        <div className={styles.flatProjectListContainer}>
+          <div className={styles.flatCategory}>
+            <div className={styles.categoryTitle}>
+              <span>제목</span>
+            </div>
+            <div className={styles.categoryUpdate}>
+              <span>변경일</span>
+            </div>
+            <div className={styles.categoryOption}>
+              <span>옵션</span>
+            </div>
+          </div>
+          {belongProjectResponse.projectDtoList.map((project, index) => (
+            <FlatProject key={index} project={project} />
+          ))}
+        </div>
+      )}
     </>
   );
 }

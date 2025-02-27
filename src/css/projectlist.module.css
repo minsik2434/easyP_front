@@ -92,16 +92,26 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.projectListContainer {
+.squareProjectListContainer {
   display: grid;
   gap: 30px;
-  padding: 50px;
+  padding: 50px 25px;
   grid-template-columns: repeat(auto-fit, minmax(350px, 0.7fr));
   grid-auto-rows: minmax(200px, 330px);
-  max-width: 100%; /* 전체 컨테이너의 최대 너비 설정(필요에 따라 조절) */
-  /* margin: 0 auto; 중앙 정렬 */
+  max-width: 100%;
   justify-content: center;
 }
+.lessThree {
+  justify-content: start;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 400px));
+}
+
+.flatProjectListContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 25px;
+}
+
 .orderButtonWrapper {
   display: flex;
   justify-content: space-between;
@@ -110,4 +120,18 @@
 .checkIconSize {
   width: 1rem;
   height: 1rem;
+}
+
+.flatCategory {
+  display: flex;
+  font-weight: bold;
+}
+.categoryTitle {
+  width: 60%;
+}
+.categoryUpdate {
+  width: 20%;
+}
+.categoryOption {
+  width: 20%;
 }
