@@ -101,96 +101,103 @@ function ProjectList() {
             </button>
           </div>
         </div>
-        <div className={styles.optionItem}>
-          <button
-            className={`${styles.viewButton} ${
-              viewSelect === "list" ? styles.select : ""
-            }`}
-            onClick={() => setViewSelect("list")}
-          >
-            <div className="default-icon">
-              <img src={Grid} />
-            </div>
-          </button>
-          <button
-            className={` ${styles.viewButton} ${
-              viewSelect === "grid" ? styles.select : ""
-            }`}
-            onClick={() => setViewSelect("grid")}
-          >
-            <div className="default-icon">
-              <img src={List} />
-            </div>
-          </button>
-        </div>
-        <div className={styles.optionItem}>
-          <div className={styles.selectBox}>
-            <div
-              className={`${styles.defaultOption} icon-button`}
-              onClick={() => {
-                setIsSortOpen((prev) => !prev);
-              }}
-              ref={selectButtonRef}
+        <div className={styles.rightContent}>
+          <div className={styles.optionItem}>
+            <button
+              className={`${styles.viewButton} ${
+                viewSelect === "list" ? styles.select : ""
+              }`}
+              onClick={() => setViewSelect("list")}
             >
-              <span>{selectedSort.label}</span>
-              <div className={`default-icon ${styles.iconSize}`}>
-                <img src={Arrow} />
+              <div className="default-icon">
+                <img src={Grid} />
               </div>
-            </div>
-            {isSortOpen && (
-              <ul className={styles.selectOptionList} ref={selectBodyRef}>
-                {options.map((option, index) => (
-                  <li
-                    className="icon-button"
-                    key={index}
-                    onClick={() => handleOptionClick(option)}
-                  >
-                    {option.label}
-                  </li>
-                ))}
-                <div className={styles.orderBox}>
-                  <li
-                    className="icon-button"
-                    onClick={() => handleSortDirectionClick("asc")}
-                  >
-                    <div className={styles.orderButtonWrapper}>
-                      <span>오름차순</span>
-                      {orderDirection == "asc" ? (
-                        <div className={`default-icon ${styles.checkIconSize}`}>
-                          <img src={Check}></img>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </li>
-                  <li
-                    className="icon-button"
-                    onClick={() => handleSortDirectionClick("desc")}
-                  >
-                    <div className={styles.orderButtonWrapper}>
-                      <span>내림차순</span>
-                      {orderDirection == "desc" ? (
-                        <div className={`default-icon ${styles.checkIconSize}`}>
-                          <img src={Check}></img>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </li>
-                </div>
-              </ul>
-            )}
+            </button>
+            <button
+              className={` ${styles.viewButton} ${
+                viewSelect === "grid" ? styles.select : ""
+              }`}
+              onClick={() => setViewSelect("grid")}
+            >
+              <div className="default-icon">
+                <img src={List} />
+              </div>
+            </button>
           </div>
-        </div>
-        <div className={styles.optionItem}>
-          <button
-            className={`${styles.createButton} icon-button`}
-            onClick={() => setIsCreateOpen((prev) => !prev)}
-          >
-            <span>생성하기</span>
-          </button>
+
+          <div className={styles.optionItem}>
+            <div className={styles.selectBox}>
+              <div
+                className={`${styles.defaultOption} icon-button`}
+                onClick={() => {
+                  setIsSortOpen((prev) => !prev);
+                }}
+                ref={selectButtonRef}
+              >
+                <span>{selectedSort.label}</span>
+                <div className={`default-icon ${styles.iconSize}`}>
+                  <img src={Arrow} />
+                </div>
+              </div>
+              {isSortOpen && (
+                <ul className={styles.selectOptionList} ref={selectBodyRef}>
+                  {options.map((option, index) => (
+                    <li
+                      className="icon-button"
+                      key={index}
+                      onClick={() => handleOptionClick(option)}
+                    >
+                      {option.label}
+                    </li>
+                  ))}
+                  <div className={styles.orderBox}>
+                    <li
+                      className="icon-button"
+                      onClick={() => handleSortDirectionClick("asc")}
+                    >
+                      <div className={styles.orderButtonWrapper}>
+                        <span>오름차순</span>
+                        {orderDirection == "asc" ? (
+                          <div
+                            className={`default-icon ${styles.checkIconSize}`}
+                          >
+                            <img src={Check}></img>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="icon-button"
+                      onClick={() => handleSortDirectionClick("desc")}
+                    >
+                      <div className={styles.orderButtonWrapper}>
+                        <span>내림차순</span>
+                        {orderDirection == "desc" ? (
+                          <div
+                            className={`default-icon ${styles.checkIconSize}`}
+                          >
+                            <img src={Check}></img>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </li>
+                  </div>
+                </ul>
+              )}
+            </div>
+          </div>
+          <div className={styles.optionItem}>
+            <button
+              className={`${styles.createButton} icon-button`}
+              onClick={() => setIsCreateOpen((prev) => !prev)}
+            >
+              <span>생성하기</span>
+            </button>
+          </div>
         </div>
       </div>
       {viewSelect === "grid" ? (
