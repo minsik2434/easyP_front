@@ -1,9 +1,11 @@
 import { useCallback } from "react";
 import { useAppStore } from "../utils/useAppStore";
 import httpService from "../utils/axiosClient";
+import { useQueryClient } from "react-query";
 
-export function useBookmarkAction(projectId, bookmarkId) {
-  const { setBookmarkUpdate, setProjectListUpdate } = useAppStore();
+export function useProjectOptionAction(projectId, bookmarkId) {
+  const { setBookmarkUpdate } = useAppStore();
+  const queryClient = useQueryClient();
   const addBookmark = useCallback(async () => {
     try {
       await httpService.post(`/member/bookmark/${projectId}`);
@@ -25,11 +27,24 @@ export function useBookmarkAction(projectId, bookmarkId) {
   const leaveProject = useCallback(async () => {
     try {
       await httpService.post(`/member/leave/${projectId}`);
+      queryClient.setQueryData(["projects"], (oldData) => {
+        if (!oldData) return oldData;
+        return {
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            projectDtoList: page.projectDtoList.filter(
+              (project) => project.id !== projectId
+            ),
+          })),
+          pageParams: oldData.pageParams,
+        };
+      });
+
+      queryClient.invalidateQueries(["projects"]);
       setBookmarkUpdate(true);
-      setProjectListUpdate(true);
     } catch (error) {
       console.log(error);
     }
-  }, [projectId, setBookmarkUpdate, setProjectListUpdate]);
+  }, [projectId, queryClient, setBookmarkUpdate]);
   return { addBookmark, removeBookmark, leaveProject };
 }

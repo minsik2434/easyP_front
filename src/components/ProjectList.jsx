@@ -4,7 +4,7 @@ import List from "../assets/icon/list.svg";
 import Grid from "../assets/icon/grid.svg";
 import XIcon from "../assets/icon/x.svg";
 import SearchIcon from "../assets/icon/glass.svg";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import SquareProject from "./SquareProject";
 import useLockScroll from "../hooks/useLockScroll";
 import httpService from "../utils/axiosClient";
@@ -13,45 +13,41 @@ import { useMemberInfo } from "../utils/memberInfo";
 import useClickOutside from "../hooks/useClickOutSide";
 import FlatProject from "./FlatProject";
 import CreateProjectModal from "./modals/CreateProjectModal";
-import { useAppStore } from "../utils/useAppStore";
+import { useInfiniteQuery } from "react-query";
 function ProjectList() {
   const [viewSelect, setViewSelect] = useState("grid");
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [nameParam, setNameParam] = useState("");
-  const { projectListUpdate, setProjectListUpdate } = useAppStore();
-  const handleKeydownSearch = (e) => {
-    if (e.key === "Enter") {
-      setNameParam(searchValue);
-    }
-  };
+  const { memberInfo } = useMemberInfo();
+  const selectButtonRef = useRef(null);
+  const selectBodyRef = useRef(null);
+  const loaderRef = useRef(null);
+  useLockScroll(isSortOpen);
   const [selectedSort, setSelectedSort] = useState({
     label: "정렬 선택",
     value: "id",
   });
   const [orderDirection, setOrderDirection] = useState("asc");
-  const selectButtonRef = useRef(null);
-  const selectBodyRef = useRef(null);
-  const [belongProjectResponse, setBelongProjectReponse] = useState({
-    projectDtoList: [],
-    currentPage: 0,
-    totalPage: 0,
-    pageSize: 0,
-    totalElement: 0,
-  });
-  const { memberInfo } = useMemberInfo();
-  const handleOptionClick = (option) => {
+  const handleOptionClick = useCallback((option) => {
     setSelectedSort(option);
     setIsSortOpen(false);
-  };
+  }, []);
 
-  const handleSortDirectionClick = (direction) => {
+  const handleSortDirectionClick = useCallback((direction) => {
     setOrderDirection(direction);
     setIsSortOpen(false);
-  };
+  }, []);
 
-  useLockScroll(isSortOpen);
+  const handleKeydownSearch = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        setNameParam(searchValue);
+      }
+    },
+    [searchValue]
+  );
   const options = [
     { label: "정렬선택", value: "id" },
     { label: "이름순", value: "name" },
@@ -59,29 +55,49 @@ function ProjectList() {
     { label: "생성일순", value: "createAt" },
   ];
   useClickOutside([selectButtonRef, selectBodyRef], () => setIsSortOpen(false));
-  useEffect(() => {
-    const getProjectList = async () => {
-      try {
-        let request = `/member/${memberInfo.email}/project?sort=${selectedSort.value},${orderDirection}`;
-        if (nameParam) {
-          request = request + `&name=${nameParam}`;
-        }
-        const response = await httpService.get(request);
-        setBelongProjectReponse(response.data);
-        setProjectListUpdate(false);
-      } catch (error) {
-        console.log(error);
+  const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
+    [
+      "projects",
+      memberInfo.email,
+      selectedSort.value,
+      orderDirection,
+      nameParam,
+    ],
+    async ({ pageParam = 0 }) => {
+      let request = `/member/${memberInfo.email}/project?sort=${selectedSort.value},${orderDirection}&page=${pageParam}`;
+      if (nameParam) {
+        request += `&name=${nameParam}`;
       }
-    };
-    getProjectList();
-  }, [
-    memberInfo.email,
-    nameParam,
-    orderDirection,
-    selectedSort.value,
-    projectListUpdate,
-    setProjectListUpdate,
-  ]);
+      const response = await httpService.get(request);
+      return response.data;
+    },
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.currentPage < lastPage.totalPage - 1
+          ? lastPage.currentPage + 1
+          : undefined;
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (!loaderRef.current || status !== "success") return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.01 }
+    );
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, status]);
+  const projects = data
+    ? data.pages.flatMap((page) => page.projectDtoList)
+    : [];
   return (
     <>
       <div className={styles.optionItemContainer}>
@@ -213,13 +229,11 @@ function ProjectList() {
       {viewSelect === "grid" ? (
         <div
           className={`${styles.squareProjectListContainer} ${
-            belongProjectResponse.projectDtoList.length < 3
-              ? styles.lessThree
-              : ""
+            projects.length < 3 ? styles.lessThree : ""
           }`}
         >
-          {belongProjectResponse.projectDtoList.map((project, index) => (
-            <SquareProject key={index} project={project} />
+          {projects.map((project) => (
+            <SquareProject key={project.id} project={project} />
           ))}
         </div>
       ) : (
@@ -235,11 +249,12 @@ function ProjectList() {
               <span>옵션</span>
             </div>
           </div>
-          {belongProjectResponse.projectDtoList.map((project, index) => (
-            <FlatProject key={index} project={project} />
+          {projects.map((project) => (
+            <FlatProject key={project.id} project={project} />
           ))}
         </div>
       )}
+      <div ref={loaderRef} style={{ height: "1px" }} />
       {isCreateOpen && (
         <div className={styles.modalOverlay}>
           <div className={`${styles.createModal} modal-container`}>

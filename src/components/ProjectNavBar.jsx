@@ -4,12 +4,11 @@ import { useAppStore } from "../utils/useAppStore";
 import { useBookmarkState } from "../hooks/useBookmarkState";
 import Bookmark from "../assets/icon/bookmark.svg";
 import Bookmark2 from "../assets/icon/bookmark2.svg";
-import Delete from "../assets/icon/delete.svg";
-import { useBookmarkAction } from "../hooks/useProjectOptionAction";
+import { useProjectOptionAction } from "../hooks/useProjectOptionAction";
 function ProjectNavBar({ project }) {
   const { bookmarks } = useAppStore();
   const { isBookmarking, bookmarkId } = useBookmarkState(project.id, bookmarks);
-  const { addBookmark, removeBookmark } = useBookmarkAction(
+  const { addBookmark, removeBookmark } = useProjectOptionAction(
     project.id,
     bookmarkId
   );

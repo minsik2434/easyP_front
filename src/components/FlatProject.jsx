@@ -5,13 +5,13 @@ import Bookmark2 from "../assets/icon/bookmark2.svg";
 import Delete from "../assets/icon/delete.svg";
 import { useAppStore } from "../utils/useAppStore";
 import { useBookmarkState } from "../hooks/useBookmarkState";
-import { useBookmarkAction } from "../hooks/useProjectOptionAction";
+import { useProjectOptionAction } from "../hooks/useProjectOptionAction";
 import { useNavigate } from "react-router-dom";
 function FlatProject({ project }) {
   const { bookmarks, setBookmarkUpdate } = useAppStore();
   const { isBookmarking, bookmarkId } = useBookmarkState(project.id, bookmarks);
   const updateAt = parseDateTime(project.updateAt);
-  const { addBookmark, removeBookmark, leaveProject } = useBookmarkAction(
+  const { addBookmark, removeBookmark, leaveProject } = useProjectOptionAction(
     project.id,
     bookmarkId
   );

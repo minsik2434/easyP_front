@@ -5,17 +5,16 @@ import ProjectOptionModal from "./modals/ProjectOptionModal";
 import { parseDateTime } from "../utils/parseDateTime";
 import { useAppStore } from "../utils/useAppStore";
 import { useBookmarkState } from "../hooks/useBookmarkState";
-import { useBookmarkAction } from "../hooks/useProjectOptionAction";
+import { useProjectOptionAction } from "../hooks/useProjectOptionAction";
 import { useNavigate } from "react-router-dom";
 function SquareProject({ project }) {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const buttonRef = useRef();
   const [modalPosition, setModalPosition] = useState("bottom");
   const updateAt = parseDateTime(project.updateAt);
-  const { bookmarks, setBookmarkUpdate } = useAppStore();
-  const { setProjectListUpdate } = useAppStore();
+  const { bookmarks } = useAppStore();
   const { isBookmarking, bookmarkId } = useBookmarkState(project.id, bookmarks);
-  const { addBookmark, removeBookmark, leaveProject } = useBookmarkAction(
+  const { addBookmark, removeBookmark, leaveProject } = useProjectOptionAction(
     project.id,
     bookmarkId
   );
