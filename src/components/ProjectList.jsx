@@ -13,12 +13,14 @@ import { useMemberInfo } from "../utils/memberInfo";
 import useClickOutside from "../hooks/useClickOutSide";
 import FlatProject from "./FlatProject";
 import CreateProjectModal from "./modals/CreateProjectModal";
+import { useAppStore } from "../utils/useAppStore";
 function ProjectList() {
   const [viewSelect, setViewSelect] = useState("grid");
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [nameParam, setNameParam] = useState("");
+  const { projectListUpdate, setProjectListUpdate } = useAppStore();
   const handleKeydownSearch = (e) => {
     if (e.key === "Enter") {
       setNameParam(searchValue);
@@ -66,12 +68,20 @@ function ProjectList() {
         }
         const response = await httpService.get(request);
         setBelongProjectReponse(response.data);
+        setProjectListUpdate(false);
       } catch (error) {
         console.log(error);
       }
     };
     getProjectList();
-  }, [memberInfo.email, nameParam, orderDirection, selectedSort.value]);
+  }, [
+    memberInfo.email,
+    nameParam,
+    orderDirection,
+    selectedSort.value,
+    projectListUpdate,
+    setProjectListUpdate,
+  ]);
   return (
     <>
       <div className={styles.optionItemContainer}>

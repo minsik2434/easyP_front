@@ -5,4 +5,6 @@ export const useAppStore = create((set) => ({
   setBookmarks: (newBookmarks) => set({ bookmarks: newBookmarks }),
   boomarkUpdate: false,
   setBookmarkUpdate: (update) => set({ boomarkUpdate: update }),
+  projectListUpdate: false,
+  setProjectListUpdate: (update) => set({ projectListUpdate: update }),
 }));

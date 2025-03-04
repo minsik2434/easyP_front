@@ -8,7 +8,16 @@ import { forwardRef, useRef } from "react";
 import useClickOutside from "../../hooks/useClickOutSide";
 
 const ProjectOptionModal = forwardRef(
-  ({ setIsOptionOpen, removeBookmark, addBookmark, isBookmarking }, ref) => {
+  (
+    {
+      setIsOptionOpen,
+      removeBookmark,
+      addBookmark,
+      isBookmarking,
+      leaveProject,
+    },
+    ref
+  ) => {
     useLockScroll(true);
     const optionRef = useRef(null);
     useClickOutside([ref, optionRef], () => setIsOptionOpen(false));
@@ -20,7 +29,8 @@ const ProjectOptionModal = forwardRef(
         <div className={styles.wrapper}>
           <button
             className={`${styles.icon} icon-button`}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               if (isBookmarking) {
                 removeBookmark();
               } else {
@@ -42,7 +52,13 @@ const ProjectOptionModal = forwardRef(
               <span>즐겨찾기 해제</span>
             )}
           </button>
-          <button className={`${styles.icon} icon-button`}>
+          <button
+            className={`${styles.icon} icon-button`}
+            onClick={(e) => {
+              e.stopPropagation();
+              leaveProject();
+            }}
+          >
             <div className="default-icon">
               <img src={Delete} />
             </div>
@@ -56,6 +72,10 @@ const ProjectOptionModal = forwardRef(
 
 ProjectOptionModal.propTypes = {
   setIsOptionOpen: PropTypes.func.isRequired,
+  removeBookmark: PropTypes.func.isRequired,
+  addBookmark: PropTypes.func.isRequired,
+  isBookmarking: PropTypes.bool.isRequired,
+  leaveProject: PropTypes.func.isRequired,
 };
 
 ProjectOptionModal.displayName = "ProjectOptionModal";

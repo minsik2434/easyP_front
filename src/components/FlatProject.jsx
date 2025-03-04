@@ -4,35 +4,23 @@ import Bookmark from "../assets/icon/bookmark.svg";
 import Bookmark2 from "../assets/icon/bookmark2.svg";
 import Delete from "../assets/icon/delete.svg";
 import { useAppStore } from "../utils/useAppStore";
-import httpService from "../utils/axiosClient";
+import { useBookmarkState } from "../hooks/useBookmarkState";
+import { useBookmarkAction } from "../hooks/useProjectOptionAction";
+import { useNavigate } from "react-router-dom";
 function FlatProject({ project }) {
   const { bookmarks, setBookmarkUpdate } = useAppStore();
-  const foundBookmark = bookmarks.find(
-    (bookmark) => bookmark.projectDto.id === project.id
-  );
-  const isBookmarking = !!foundBookmark;
-  const bookmarkId = foundBookmark ? foundBookmark.id : null;
+  const { isBookmarking, bookmarkId } = useBookmarkState(project.id, bookmarks);
   const updateAt = parseDateTime(project.updateAt);
-
-  const httpAddBookmark = async () => {
-    try {
-      await httpService.post(`/member/bookmark/${project.id}`);
-      setBookmarkUpdate(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const httpRemoveBookmark = async () => {
-    try {
-      await httpService.delete(`/member/bookmark/${bookmarkId}`);
-      setBookmarkUpdate(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const { addBookmark, removeBookmark, leaveProject } = useBookmarkAction(
+    project.id,
+    bookmarkId
+  );
+  const nav = useNavigate();
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      onClick={() => nav(`/project/${project.id}/tasks`)}
+    >
       <div className={styles.projectWrapper}>
         <div className={`default-icon ${styles.projectImgSize}`}>
           <img src={project.imgUrl} />
@@ -50,11 +38,12 @@ function FlatProject({ project }) {
       <div className={styles.iconButtonWrapper}>
         <button
           className={`${styles.iconButton} icon-button`}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             if (isBookmarking) {
-              httpRemoveBookmark();
+              removeBookmark();
             } else {
-              httpAddBookmark();
+              addBookmark();
             }
           }}
         >
@@ -66,7 +55,13 @@ function FlatProject({ project }) {
             )}
           </div>
         </button>
-        <button className={`${styles.iconButton} icon-button`}>
+        <button
+          className={`${styles.iconButton} icon-button`}
+          onClick={(e) => {
+            e.stopPropagation();
+            leaveProject();
+          }}
+        >
           <div className={`${styles.iconButtonImgSize} default-icon`}>
             <img src={Delete} />
           </div>

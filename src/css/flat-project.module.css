@@ -1,6 +1,12 @@
 .container {
   display: flex;
+  cursor: pointer;
   border-bottom: solid 0.5px #ced4da;
+}
+.container:hover {
+  border-color: #ced4da;
+  background-color: #fafafa;
+  opacity: 0.8;
 }
 
 .projectImgSize {

@@ -3,37 +3,23 @@ import Dot from "../assets/icon/dot.svg";
 import { useEffect, useRef, useState } from "react";
 import ProjectOptionModal from "./modals/ProjectOptionModal";
 import { parseDateTime } from "../utils/parseDateTime";
-import httpService from "../utils/axiosClient";
 import { useAppStore } from "../utils/useAppStore";
+import { useBookmarkState } from "../hooks/useBookmarkState";
+import { useBookmarkAction } from "../hooks/useProjectOptionAction";
+import { useNavigate } from "react-router-dom";
 function SquareProject({ project }) {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const buttonRef = useRef();
   const [modalPosition, setModalPosition] = useState("bottom");
   const updateAt = parseDateTime(project.updateAt);
   const { bookmarks, setBookmarkUpdate } = useAppStore();
-  const foundBookmark = bookmarks.find(
-    (bookmark) => bookmark.projectDto.id === project.id
+  const { setProjectListUpdate } = useAppStore();
+  const { isBookmarking, bookmarkId } = useBookmarkState(project.id, bookmarks);
+  const { addBookmark, removeBookmark, leaveProject } = useBookmarkAction(
+    project.id,
+    bookmarkId
   );
-  const isBookmarking = !!foundBookmark;
-  const bookmarkId = foundBookmark ? foundBookmark.id : null;
-
-  const httpAddBookmark = async () => {
-    try {
-      await httpService.post(`/member/bookmark/${project.id}`);
-      setBookmarkUpdate(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const httpRemoveBookmark = async () => {
-    try {
-      await httpService.delete(`/member/bookmark/${bookmarkId}`);
-      setBookmarkUpdate(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const nav = useNavigate();
   useEffect(() => {
     if (isOptionOpen && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
@@ -46,7 +32,10 @@ function SquareProject({ project }) {
     }
   }, [isOptionOpen]);
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      onClick={() => nav(`/project/${project.id}/tasks`)}
+    >
       <div className={styles.wrapper}>
         <div className={`default-icon ${styles.projectImgSize}`}>
           <img src={project.imgUrl} />
@@ -65,7 +54,8 @@ function SquareProject({ project }) {
             <button
               ref={buttonRef}
               className={styles.settingButton}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsOptionOpen((prev) => !prev);
               }}
             >
@@ -81,9 +71,10 @@ function SquareProject({ project }) {
               >
                 <ProjectOptionModal
                   setIsOptionOpen={setIsOptionOpen}
-                  addBookmark={httpAddBookmark}
+                  addBookmark={addBookmark}
                   isBookmarking={isBookmarking}
-                  removeBookmark={httpRemoveBookmark}
+                  removeBookmark={removeBookmark}
+                  leaveProject={leaveProject}
                   ref={buttonRef}
                 />
               </div>

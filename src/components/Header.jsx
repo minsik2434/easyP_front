@@ -1,21 +1,17 @@
 import styles from "../css/header.module.css";
 import { useMemberInfo } from "../utils/memberInfo";
-import SearchIcon from "../assets/icon/glass.svg";
 import SideClose from "../assets/icon/side-close.svg";
-import XIcon from "../assets/icon/x.svg";
 import Alarm from "../assets/icon/alarm.svg";
 import Logo from "../assets/icon/Logo.svg";
 import SideOpen from "../assets/icon/side-open.svg";
 import { useRef, useState } from "react";
 import ProfileModal from "./modals/ProfileModal";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 function Header({ isSidebarOpen, toggleSidebar }) {
   const { memberInfo } = useMemberInfo();
-  const [searchValue, setSearchValue] = useState("");
   const [profileModal, setProfileModal] = useState(false);
   const profileButtonRef = useRef();
-  const inputRef = useRef();
-
   return (
     <>
       <div className={styles.container}>
@@ -36,12 +32,12 @@ function Header({ isSidebarOpen, toggleSidebar }) {
           </button>
         </div>
         <div className={styles.leftContent}>
-          <button className={styles.logoButton}>
+          <Link to={"/"} className={styles.logoButton}>
             <div className="default-icon">
               <img src={Logo} />
             </div>
             <span>EasyP</span>
-          </button>
+          </Link>
         </div>
         <div className={styles.rightContent}>
           <div className={styles.iconButtonWrapper}>
