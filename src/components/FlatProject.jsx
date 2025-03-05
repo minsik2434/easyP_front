@@ -3,17 +3,13 @@ import { parseDateTime } from "../utils/parseDateTime";
 import Bookmark from "../assets/icon/bookmark.svg";
 import Bookmark2 from "../assets/icon/bookmark2.svg";
 import Delete from "../assets/icon/delete.svg";
-import { useAppStore } from "../utils/useAppStore";
-import { useBookmarkState } from "../hooks/useBookmarkState";
 import { useProjectOptionAction } from "../hooks/useProjectOptionAction";
 import { useNavigate } from "react-router-dom";
 function FlatProject({ project }) {
-  const { bookmarks, setBookmarkUpdate } = useAppStore();
-  const { isBookmarking, bookmarkId } = useBookmarkState(project.id, bookmarks);
   const updateAt = parseDateTime(project.updateAt);
   const { addBookmark, removeBookmark, leaveProject } = useProjectOptionAction(
     project.id,
-    bookmarkId
+    project.bookmarkId
   );
   const nav = useNavigate();
   return (
@@ -40,7 +36,7 @@ function FlatProject({ project }) {
           className={`${styles.iconButton} icon-button`}
           onClick={(e) => {
             e.stopPropagation();
-            if (isBookmarking) {
+            if (project.bookmarked) {
               removeBookmark();
             } else {
               addBookmark();
@@ -48,7 +44,7 @@ function FlatProject({ project }) {
           }}
         >
           <div className={`${styles.iconButtonImgSize} default-icon`}>
-            {isBookmarking === false ? (
+            {project.bookmarked === false ? (
               <img src={Bookmark} />
             ) : (
               <img src={Bookmark2} />

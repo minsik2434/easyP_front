@@ -1,50 +1,99 @@
 import { useCallback } from "react";
-import { useAppStore } from "../utils/useAppStore";
 import httpService from "../utils/axiosClient";
-import { useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 export function useProjectOptionAction(projectId, bookmarkId) {
-  const { setBookmarkUpdate } = useAppStore();
   const queryClient = useQueryClient();
-  const addBookmark = useCallback(async () => {
-    try {
-      await httpService.post(`/member/bookmark/${projectId}`);
-      setBookmarkUpdate(true);
-    } catch (error) {
-      console.log(error);
+  const addBookmarkMutation = useMutation(
+    () => httpService.post(`/member/bookmark/${projectId}`),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries("projects");
+        const previousProjects = queryClient.getQueryData("projects");
+        queryClient.setQueryData("projects", (oldData) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => ({
+              ...page,
+              projectDtoList: page.projectDtoList.map((proj) =>
+                proj.id === projectId
+                  ? {
+                      ...proj,
+                      bookmarked: true,
+                      bookmarkId: -1,
+                    }
+                  : proj
+              ),
+            })),
+          };
+        });
+        return { previousProjects };
+      },
+      onError: (err, variables, context) => {
+        if (context?.previousProjects) {
+          queryClient.setQueryData("projects", context.previousProjects);
+        }
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("projects");
+      },
     }
-  }, [projectId, setBookmarkUpdate]);
+  );
 
-  const removeBookmark = useCallback(async () => {
-    try {
-      await httpService.delete(`/member/bookmark/${bookmarkId}`);
-      setBookmarkUpdate(true);
-    } catch (error) {
-      console.log(error);
+  const removeBookmarkMutation = useMutation(
+    () => httpService.delete(`/member/bookmark/${bookmarkId}`),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries("projects");
+        const previousProjects = queryClient.getQueryData("projects");
+        queryClient.setQueryData("projects", (oldData) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => ({
+              ...page,
+              projectDtoList: page.projectDtoList.map((proj) =>
+                proj.id === projectId
+                  ? {
+                      ...proj,
+                      bookmarked: false,
+                      bookmarkId: null,
+                    }
+                  : proj
+              ),
+            })),
+          };
+        });
+        return { previousProjects };
+      },
+      onError: (err, variables, context) => {
+        if (context?.previousProjects) {
+          queryClient.setQueryData("projects", context.previousProjects);
+        }
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("projects");
+      },
     }
-  }, [bookmarkId, setBookmarkUpdate]);
+  );
+
+  const addBookmark = useCallback(() => {
+    addBookmarkMutation.mutate();
+  }, [addBookmarkMutation]);
+
+  const removeBookmark = useCallback(() => {
+    removeBookmarkMutation.mutate();
+  }, [removeBookmarkMutation]);
 
   const leaveProject = useCallback(async () => {
     try {
       await httpService.post(`/member/leave/${projectId}`);
-      queryClient.setQueryData(["projects"], (oldData) => {
-        if (!oldData) return oldData;
-        return {
-          pages: oldData.pages.map((page) => ({
-            ...page,
-            projectDtoList: page.projectDtoList.filter(
-              (project) => project.id !== projectId
-            ),
-          })),
-          pageParams: oldData.pageParams,
-        };
-      });
-
       queryClient.invalidateQueries(["projects"]);
-      setBookmarkUpdate(true);
+      queryClient.invalidateQueries(["bookmarks"]);
     } catch (error) {
       console.log(error);
     }
-  }, [projectId, queryClient, setBookmarkUpdate]);
+  }, [projectId, queryClient]);
   return { addBookmark, removeBookmark, leaveProject };
 }

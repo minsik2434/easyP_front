@@ -3,8 +3,6 @@ import Dot from "../assets/icon/dot.svg";
 import { useEffect, useRef, useState } from "react";
 import ProjectOptionModal from "./modals/ProjectOptionModal";
 import { parseDateTime } from "../utils/parseDateTime";
-import { useAppStore } from "../utils/useAppStore";
-import { useBookmarkState } from "../hooks/useBookmarkState";
 import { useProjectOptionAction } from "../hooks/useProjectOptionAction";
 import { useNavigate } from "react-router-dom";
 function SquareProject({ project }) {
@@ -12,13 +10,12 @@ function SquareProject({ project }) {
   const buttonRef = useRef();
   const [modalPosition, setModalPosition] = useState("bottom");
   const updateAt = parseDateTime(project.updateAt);
-  const { bookmarks } = useAppStore();
-  const { isBookmarking, bookmarkId } = useBookmarkState(project.id, bookmarks);
   const { addBookmark, removeBookmark, leaveProject } = useProjectOptionAction(
     project.id,
-    bookmarkId
+    project.bookmarkId
   );
   const nav = useNavigate();
+
   useEffect(() => {
     if (isOptionOpen && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
@@ -71,7 +68,7 @@ function SquareProject({ project }) {
                 <ProjectOptionModal
                   setIsOptionOpen={setIsOptionOpen}
                   addBookmark={addBookmark}
-                  isBookmarking={isBookmarking}
+                  isBookmarking={project.bookmarked}
                   removeBookmark={removeBookmark}
                   leaveProject={leaveProject}
                   ref={buttonRef}
