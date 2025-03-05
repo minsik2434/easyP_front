@@ -37,6 +37,7 @@ export function useProjectOptionAction(projectId, bookmarkId) {
       },
       onSettled: () => {
         queryClient.invalidateQueries("projects");
+        queryClient.invalidateQueries("bookmarks");
       },
     }
   );
@@ -74,6 +75,7 @@ export function useProjectOptionAction(projectId, bookmarkId) {
       },
       onSettled: () => {
         queryClient.invalidateQueries("projects");
+        queryClient.invalidateQueries("bookmarks");
       },
     }
   );

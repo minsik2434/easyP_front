@@ -5,6 +5,10 @@ import Bookmark2 from "../assets/icon/bookmark2.svg";
 import Delete from "../assets/icon/delete.svg";
 import { useProjectOptionAction } from "../hooks/useProjectOptionAction";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+
+const MemoizedFlatProject = React.memo(FlatProject);
+
 function FlatProject({ project }) {
   const updateAt = parseDateTime(project.updateAt);
   const { addBookmark, removeBookmark, leaveProject } = useProjectOptionAction(
@@ -66,4 +70,4 @@ function FlatProject({ project }) {
     </div>
   );
 }
-export default FlatProject;
+export default MemoizedFlatProject;

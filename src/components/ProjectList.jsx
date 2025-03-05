@@ -5,15 +5,15 @@ import Grid from "../assets/icon/grid.svg";
 import XIcon from "../assets/icon/x.svg";
 import SearchIcon from "../assets/icon/glass.svg";
 import { useCallback, useEffect, useRef, useState } from "react";
-import SquareProject from "./SquareProject";
 import useLockScroll from "../hooks/useLockScroll";
 import httpService from "../utils/axiosClient";
 import Check from "../assets/icon/check.svg";
 import { useMemberInfo } from "../utils/memberInfo";
 import useClickOutside from "../hooks/useClickOutSide";
-import FlatProject from "./FlatProject";
 import CreateProjectModal from "./modals/CreateProjectModal";
 import { useInfiniteQuery } from "react-query";
+import MemoizedFlatProject from "./FlatProject";
+import MemoizedSquareProject from "./SquareProject";
 function ProjectList() {
   const [viewSelect, setViewSelect] = useState("grid");
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -233,7 +233,7 @@ function ProjectList() {
           }`}
         >
           {projects.map((project) => (
-            <SquareProject key={project.id} project={project} />
+            <MemoizedSquareProject key={project.id} project={project} />
           ))}
         </div>
       ) : (
@@ -250,7 +250,7 @@ function ProjectList() {
             </div>
           </div>
           {projects.map((project) => (
-            <FlatProject key={project.id} project={project} />
+            <MemoizedFlatProject key={project.id} project={project} />
           ))}
         </div>
       )}

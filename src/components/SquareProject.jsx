@@ -1,10 +1,12 @@
 import styles from "../css/square-project.module.css";
 import Dot from "../assets/icon/dot.svg";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ProjectOptionModal from "./modals/ProjectOptionModal";
 import { parseDateTime } from "../utils/parseDateTime";
 import { useProjectOptionAction } from "../hooks/useProjectOptionAction";
 import { useNavigate } from "react-router-dom";
+
+const MemoizedSquareProject = React.memo(SquareProject);
 function SquareProject({ project }) {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const buttonRef = useRef();
@@ -82,4 +84,4 @@ function SquareProject({ project }) {
   );
 }
 
-export default SquareProject;
+export default MemoizedSquareProject;

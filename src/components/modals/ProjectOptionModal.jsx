@@ -21,7 +21,6 @@ const ProjectOptionModal = forwardRef(
     useLockScroll(true);
     const optionRef = useRef(null);
     useClickOutside([ref, optionRef], () => setIsOptionOpen(false));
-    console.log(isBookmarking);
     return (
       <div
         className={`${styles.modalContainer} modal-container`}
