@@ -95,9 +95,7 @@ function ProjectList() {
     }
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, status]);
-  const projects = data
-    ? data.pages.flatMap((page) => page.projectDtoList)
-    : [];
+  const projects = data ? data.pages.flatMap((page) => page.dtoList) : [];
   return (
     <>
       <div className={styles.optionItemContainer}>

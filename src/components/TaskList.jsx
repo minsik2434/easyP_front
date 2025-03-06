@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import httpService from "../utils/axiosClient";
 function TaskList() {
   const { projectId } = useParams();
-  const [projectInfo, setProjectInfo] = useState({
+  const [project, setProject] = useState({
     id: "",
     name: "",
     description: "",
@@ -14,23 +14,28 @@ function TaskList() {
       email: "",
       profile: "",
     },
+    bookmarkId: "",
+    bookmarked: false,
     updateAt: "",
   });
+
+  const [projectUpdate, setProjectUpdate] = useState(false);
   useEffect(() => {
     const getProjectInfo = async () => {
       try {
         const response = await httpService.get(`/project/${projectId}`);
-        setProjectInfo(response.data);
+        setProject(response.data);
       } catch (error) {
         console.log(error);
       }
     };
     getProjectInfo();
-  }, [projectId]);
+    setProjectUpdate(false);
+  }, [projectId, projectUpdate]);
   return (
     <>
       <div className={styles.navContainer}>
-        <ProjectNavBar project={projectInfo} />
+        <ProjectNavBar project={project} setProjectUpdate={setProjectUpdate} />
       </div>
     </>
   );

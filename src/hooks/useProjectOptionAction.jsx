@@ -16,7 +16,7 @@ export function useProjectOptionAction(projectId, bookmarkId) {
             ...oldData,
             pages: oldData.pages.map((page) => ({
               ...page,
-              projectDtoList: page.projectDtoList.map((proj) =>
+              projectDtoList: page.dtoList.map((proj) =>
                 proj.id === projectId
                   ? {
                       ...proj,
@@ -54,7 +54,7 @@ export function useProjectOptionAction(projectId, bookmarkId) {
             ...oldData,
             pages: oldData.pages.map((page) => ({
               ...page,
-              projectDtoList: page.projectDtoList.map((proj) =>
+              projectDtoList: page.dtoList.map((proj) =>
                 proj.id === projectId
                   ? {
                       ...proj,

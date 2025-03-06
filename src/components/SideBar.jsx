@@ -33,9 +33,7 @@ function SideBar({ isSidebarOpen }) {
     }
   );
 
-  const bookmarks = data
-    ? data.pages.flatMap((page) => page.projectDtoList)
-    : [];
+  const bookmarks = data ? data.pages.flatMap((page) => page.dtoList) : [];
 
   useEffect(() => {
     if (!loaderRef.current || status !== "success" || isDragging) return;
@@ -53,8 +51,8 @@ function SideBar({ isSidebarOpen }) {
 
   const onDragStart = useCallback(() => {
     if (!data) return;
-    const flatBookmarks = data.pages.flatMap((page) => page.projectDtoList);
-    const pageSizes = data.pages.map((page) => page.projectDtoList.length);
+    const flatBookmarks = data.pages.flatMap((page) => page.dtoList);
+    const pageSizes = data.pages.map((page) => page.dtoList.length);
     dragDataRef.current = { flatBookmarks, pageSizes };
     setIsDragging(true);
   }, [data]);
@@ -77,7 +75,7 @@ function SideBar({ isSidebarOpen }) {
         const size = pageSizes[idx];
         const items = updatedFlat.slice(currentIndex, currentIndex + size);
         currentIndex += size;
-        return { ...page, projectDtoList: items };
+        return { ...page, dtoList: items };
       });
 
       queryClient.setQueryData(["bookmarks", memberInfo.email], (oldData) => {

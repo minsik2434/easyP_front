@@ -5,6 +5,8 @@ import LoginLoading from "./pages/LoginLoading";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Tasks from "./pages/Tasks";
+import Milestones from "./pages/Milestones";
+import Schedules from "./pages/Schedules";
 function App() {
   return (
     <>
@@ -14,6 +16,8 @@ function App() {
         <Route path="/landing" element={<Landing />} />
         <Route path="/" element={<Home />} />
         <Route path="/project/:projectId/tasks" element={<Tasks />} />
+        <Route path="/project/:projectId/milestones" element={<Milestones />} />
+        <Route path="/project/:projectId/schedules" element={<Schedules />} />
       </Routes>
     </>
   );

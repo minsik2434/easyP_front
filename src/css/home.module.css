@@ -26,6 +26,8 @@
   margin-top: 53px;
   margin-left: 95px;
   transition: margin-left 0.3s ease;
+  background-color: #f5f7fa;
+  min-height: calc(100vh - 53px);
 }
 
 .main.open {
