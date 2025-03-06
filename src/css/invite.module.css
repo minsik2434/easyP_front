@@ -57,3 +57,91 @@
   all: unset;
   cursor: pointer;
 }
+
+.inviteMemberList {
+  height: 200px;
+  width: 92%;
+  border: solid #ced4da;
+  border-radius: 7px;
+  overflow-y: auto;
+}
+
+.inviteMember {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.inviteMember:hover {
+  background-color: #e9ecef;
+}
+
+.profileImageSize {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+}
+.inviteMemberInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  user-select: none;
+}
+
+.profileImageWrapper {
+  padding: 5px;
+}
+.emailTag {
+  font-weight: bold;
+}
+.nameTag {
+  font-size: 14px;
+  color: #495057;
+}
+
+.selectedInviteMemberWrapper {
+  width: 87%;
+  margin-top: 20px;
+  position: relative;
+  display: flex;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: #e9ecef;
+  border: solid #ced4da;
+}
+
+.inviteButtonWrapper {
+  display: flex;
+  margin-top: 30px;
+  justify-content: end;
+}
+
+.inviteButton {
+  all: unset;
+  margin-right: 20px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 7px;
+  border: solid #ced4da;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.inviteButton:hover {
+  background-color: #e9ecef;
+}
+
+.inviteButton:active {
+  background-color: #ced4da;
+}
+
+.cancelIconSize {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.cancelButton {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 18px;
+}
