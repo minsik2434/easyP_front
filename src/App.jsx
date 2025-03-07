@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Tasks from "./pages/Tasks";
 import Milestones from "./pages/Milestones";
 import Schedules from "./pages/Schedules";
+import ProtectedRoute from "./context/ProtectedRoute";
 function App() {
   return (
     <>
@@ -14,10 +15,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/login/oauth2/loading" element={<LoginLoading />} />
         <Route path="/landing" element={<Landing />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/project/:projectId/tasks" element={<Tasks />} />
-        <Route path="/project/:projectId/milestones" element={<Milestones />} />
-        <Route path="/project/:projectId/schedules" element={<Schedules />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/project/:projectId/tasks" element={<Tasks />} />
+          <Route
+            path="/project/:projectId/milestones"
+            element={<Milestones />}
+          />
+          <Route path="/project/:projectId/schedules" element={<Schedules />} />
+        </Route>
       </Routes>
     </>
   );
