@@ -1,0 +1,55 @@
+.container {
+  width: 300px;
+  padding: 15px 20px;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+}
+
+.contentWrapper {
+  margin-top: 10px;
+}
+
+.notification {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  padding: 10px 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 알림 등장 애니메이션 */
+.notification-enter {
+  animation: slideInRight 0.3s ease-in-out forwards;
+}
+
+/* 알림 퇴장 애니메이션 */
+.notification-exit {
+  animation: slideOutRight 0.3s ease-in-out forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

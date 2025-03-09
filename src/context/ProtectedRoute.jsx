@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../utils/authStore";
 import axios from "axios";
 import { Navigate, Outlet } from "react-router-dom";
+import WebSocketProvider from "./WebsocketProvider";
 
 const ProtectedRoute = () => {
   const [isAuthCheck, setIsAuthCheck] = useState(false);
@@ -38,7 +39,11 @@ const ProtectedRoute = () => {
   if (!isLogIn) {
     return <Navigate to="/login" />;
   }
-  return <Outlet />;
+  return (
+    <WebSocketProvider>
+      <Outlet />
+    </WebSocketProvider>
+  );
 };
 
 export default ProtectedRoute;
