@@ -1,0 +1,40 @@
+.optionItemContainer {
+  position: sticky;
+  top: 53px;
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  padding: 10px 30px;
+  z-index: 9;
+  border-bottom: 0.5px solid #ced4da;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.searchButton {
+  all: unset;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 15px;
+  background-color: #f1f3f5;
+  font-weight: bold;
+  color: #868e96;
+  padding: 7px 15px;
+}
+
+.searchButton.selected {
+  background-color: #e9ecef;
+  color: black;
+}
+
+.actionButton {
+  all: unset;
+  cursor: pointer;
+}
+
+.alarmListContainer {
+  padding: 50px 25px;
+}

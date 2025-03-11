@@ -18,7 +18,7 @@ export const useMemberInfo = create(
     }),
     {
       name: "member-info-storage",
-      getStorage: () => localStorage,
+      getStorage: () => sessionStorage,
     }
   )
 );

@@ -19,7 +19,7 @@ const Notification = ({ notification }) => {
   if (notification.type === "invite") {
     title = "프로젝트 초대 알림";
   }
-  let content = notification.projectName + " 프로젝트에 초대되었습니다";
+  let content = notification.content + " 프로젝트에 초대되었습니다";
   return (
     <div
       className={`${styles.container} ${

@@ -16,7 +16,6 @@ function ProjectNavBar({ project, setProjectUpdate }) {
   const schedulesRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
   const [isInviteOpen, setIsInviteOpen] = useState(false);
-
   useLayoutEffect(() => {
     let activeRef = null;
     if (location.pathname.includes("/tasks")) {
@@ -126,7 +125,10 @@ function ProjectNavBar({ project, setProjectUpdate }) {
         ReactDOM.createPortal(
           <div className={styles.modalOverlay}>
             <div className={`modal-container ${styles.inviteModal}`}>
-              <InviteModal setIsInviteOpen={setIsInviteOpen} />
+              <InviteModal
+                setIsInviteOpen={setIsInviteOpen}
+                projectId={project.id}
+              />
             </div>
           </div>,
           document.body

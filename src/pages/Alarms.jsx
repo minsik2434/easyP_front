@@ -1,11 +1,12 @@
 import { useState } from "react";
+import styles from "../css/home.module.css";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
-import styles from "../css/home.module.css";
-import TaskList from "../components/TaskList";
 import { useAppStore } from "../utils/useAppStore";
+import AlarmList from "../components/AlarmList";
 import Notification from "../components/modals/Notification";
-function Tasks() {
+
+const Alarms = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -20,7 +21,7 @@ function Tasks() {
         <SideBar isSidebarOpen={isSidebarOpen} />
       </div>
       <div className={`${styles.main} ${isSidebarOpen ? styles.open : ""}`}>
-        <TaskList />
+        <AlarmList />
       </div>
       <div className={styles.notificationContainer}>
         {notifications.map((notif) => (
@@ -29,6 +30,6 @@ function Tasks() {
       </div>
     </div>
   );
-}
+};
 
-export default Tasks;
+export default Alarms;

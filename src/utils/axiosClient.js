@@ -1,11 +1,18 @@
 import axios from "axios";
 import { useAuthStore } from "./authStore";
+import { useMemberInfo } from "./memberInfo";
 
 const httpService = axios.create({
   baseURL: "http://localhost:8080",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
+
+const logoutUser = () => {
+  useAuthStore.getState.clearAccessToken();
+  useMemberInfo.getState.clearMemberInfo();
+  window.location.href = "/login";
+};
 
 httpService.interceptors.request.use(
   async (config) => {
@@ -22,6 +29,7 @@ httpService.interceptors.request.use(
         token = response.data.accessToken;
         useAuthStore.getState().setAccessToken(token);
       } catch (error) {
+        logoutUser();
         return Promise.reject(error);
       }
     }

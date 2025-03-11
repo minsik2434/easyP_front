@@ -4,14 +4,32 @@ import SideClose from "../assets/icon/side-close.svg";
 import Alarm from "../assets/icon/alarm.svg";
 import Logo from "../assets/icon/Logo.svg";
 import SideOpen from "../assets/icon/side-open.svg";
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import ProfileModal from "./modals/ProfileModal";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import httpService from "../utils/axiosClient";
+import { useAppStore } from "../utils/useAppStore";
 function Header({ isSidebarOpen, toggleSidebar }) {
   const { memberInfo } = useMemberInfo();
   const [profileModal, setProfileModal] = useState(false);
   const profileButtonRef = useRef();
+  const nav = useNavigate();
+  const [notificationCount, setNotificationCount] = useState();
+  const { notifications, notificationUpdate } = useAppStore();
+  useLayoutEffect(() => {
+    const getNotificationCount = async () => {
+      try {
+        const response = await httpService.get(
+          "/member/notifications/noRead/count"
+        );
+        setNotificationCount(response.data.count);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNotificationCount();
+  }, [notifications, notificationUpdate]);
   return (
     <>
       <div className={styles.container}>
@@ -41,11 +59,21 @@ function Header({ isSidebarOpen, toggleSidebar }) {
         </div>
         <div className={styles.rightContent}>
           <div className={styles.iconButtonWrapper}>
-            <button className={styles.iconButton}>
+            <button
+              className={styles.iconButton}
+              onClick={() => {
+                nav("/alarm");
+              }}
+            >
               <div className={styles.buttonState} />
               <div className={`default-icon ${styles.iconSize}`}>
                 <img src={Alarm} alt="Alarm" />
               </div>
+              {notificationCount !== 0 && (
+                <div className={styles.notificationCount}>
+                  <span>{notificationCount}</span>
+                </div>
+              )}
             </button>
           </div>
           <div className={styles.iconButtonWrapper}>

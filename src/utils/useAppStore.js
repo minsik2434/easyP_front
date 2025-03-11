@@ -13,4 +13,8 @@ export const useAppStore = create((set) => ({
     set((state) => ({
       notifications: state.notifications.filter((n) => n.id !== id),
     })),
+  notificationUpdate: false,
+  setNotificationUpdate: (value) => set({ notificationUpdate: value }),
+  toggleNotificationUpdate: () =>
+    set((state) => ({ notificationUpdate: !state.notificationUpdate })),
 }));

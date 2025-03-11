@@ -10,6 +10,7 @@ const WebSocketProvider = ({ children }) => {
   const { addNotification } = useAppStore();
   const { accessToken } = useAuthStore();
   useEffect(() => {
+    if (!accessToken) return;
     const ws = new WebSocket(
       `ws://localhost:8080/ws/alarm?token=${accessToken}`
     );

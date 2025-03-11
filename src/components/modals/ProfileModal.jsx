@@ -4,14 +4,33 @@ import Logout from "../../assets/icon/logout.svg";
 import Setting from "../../assets/icon/setting.svg";
 import Account from "../../assets/icon/account.svg";
 import useLockScroll from "../../hooks/useLockScroll";
-import { forwardRef, useRef } from "react";
+import { forwardRef, useContext, useRef } from "react";
 import useClickOutside from "../../hooks/useClickOutSide";
 import PropTypes from "prop-types";
+import httpService from "../../utils/axiosClient";
+import { useAuthStore } from "../../utils/authStore";
+import { useNavigate } from "react-router-dom";
+import { WebSocketContext } from "../../context/WebsocketProvider";
 const ProfileModal = forwardRef(({ setProfileModal }, ref) => {
   useLockScroll(true);
   const modalRef = useRef(null);
-  const { memberInfo } = useMemberInfo();
-
+  const { memberInfo, clearMemberInfo } = useMemberInfo();
+  const { clearAccessToken } = useAuthStore();
+  const nav = useNavigate();
+  const { socket } = useContext(WebSocketContext);
+  const logout = async () => {
+    if (socket) {
+      socket.close();
+    }
+    try {
+      await httpService.post("/member/logout", {}, { skipAuth: true });
+      clearMemberInfo();
+      clearAccessToken();
+      nav("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useClickOutside([ref, modalRef], () => setProfileModal(false));
   return (
     <div className={`${styles.modalContainer} modal-container`} ref={modalRef}>
@@ -37,7 +56,10 @@ const ProfileModal = forwardRef(({ setProfileModal }, ref) => {
           </div>
           <span>설정</span>
         </button>
-        <button className={`${styles.menuButton} icon-button`}>
+        <button
+          className={`${styles.menuButton} icon-button`}
+          onClick={() => logout()}
+        >
           <div className="default-icon">
             <img src={Logout} />
           </div>

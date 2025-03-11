@@ -1,19 +1,67 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../../css/invite.module.css";
 import useClickOutside from "../../hooks/useClickOutSide";
+import ReactDOM from "react-dom";
 import Glass from "../../assets/icon/glass.svg";
 import XIcon from "../../assets/icon/x.svg";
 import { useInfiniteQuery } from "react-query";
 import httpService from "../../utils/axiosClient";
 import useDebounce from "../../hooks/useDebounce";
-function InviteModal({ setIsInviteOpen }) {
+import ErrorModal from "./ErrorModal";
+function InviteModal({ setIsInviteOpen, projectId }) {
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   const debounceSearch = useDebounce(searchValue, 500);
+  const [showModal, setShowModal] = useState(false);
   const [selectedInviteMember, setSelectedInviteMember] = useState(null);
   const loaderRef = useRef(null);
-  useClickOutside([modalRef], () => setIsInviteOpen(false));
-
+  const [error, setError] = useState({ title: "", content: "" });
+  useClickOutside([modalRef], () => {
+    if (!showModal) {
+      setIsInviteOpen(false);
+    }
+  });
+  const sendInvite = async () => {
+    try {
+      const requestBody = {
+        projectId: projectId,
+        inviteeEmail: selectedInviteMember.email,
+      };
+      await httpService.post("/project/invite", requestBody);
+      setIsInviteOpen(false);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.message === "already in the Project"
+      ) {
+        setError({
+          title: "초대할 수 없습니다",
+          content: `${selectedInviteMember.email} 님은 이미 프로젝트에 참여중입니다`,
+        });
+        setShowModal(true);
+      } else if (
+        error.response &&
+        error.response.status === 401 &&
+        error.response.data.message === "cannot invite unless OWNER, MANAGER"
+      ) {
+        setError({
+          title: "초대할 수 없습니다",
+          content: "초대할 수 있는 권한이 없습니다",
+        });
+        setShowModal(true);
+      } else if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.message === "already invited Member"
+      ) {
+        setError({
+          title: "초대할 수 없습니다",
+          content: "이미 초대된 회원입니다",
+        });
+      }
+    }
+  };
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
     ["inviteMembers", searchValue],
     async ({ pageParam = 0 }) => {
@@ -127,9 +175,24 @@ function InviteModal({ setIsInviteOpen }) {
       </div>
       {selectedInviteMember && (
         <div className={styles.inviteButtonWrapper}>
-          <button className={styles.inviteButton}>초대하기</button>
+          <button className={styles.inviteButton} onClick={() => sendInvite()}>
+            초대하기
+          </button>
         </div>
       )}
+      {showModal &&
+        ReactDOM.createPortal(
+          <div className={styles.modalOverlay}>
+            <div className={`modal-container ${styles.errorModal}`}>
+              <ErrorModal
+                title={error.title}
+                content={error.content}
+                setModal={setShowModal}
+              />
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }
