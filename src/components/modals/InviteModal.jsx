@@ -63,14 +63,13 @@ function InviteModal({ setIsInviteOpen, projectId }) {
     }
   };
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
-    ["inviteMembers", searchValue],
+    ["inviteMembers", debounceSearch],
     async ({ pageParam = 0 }) => {
-      let request = `/member?email=${searchValue}&page=${pageParam}`;
+      let request = `/member?email=${debounceSearch}&page=${pageParam}`;
       const response = await httpService.get(request);
       return response.data;
     },
     {
-      enabled: debounceSearch !== "" && searchValue !== "",
       getNextPageParam: (lastPage) => {
         return lastPage.currentPage < lastPage.totalPage - 1
           ? lastPage.currentPage + 1

@@ -1,4 +1,79 @@
 .navContainer {
   position: sticky;
   top: 53px;
+  z-index: 5;
+}
+.userList {
+  position: absolute;
+  right: 0;
+  height: calc(100vh - 215px);
+  width: 250px;
+}
+.contentContainer {
+  width: calc(100% - 250px);
+  display: flex;
+  flex-direction: column;
+}
+.sortWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.sort {
+  padding: 10px 20px;
+}
+
+.selectBox {
+  width: 100px;
+  position: relative;
+  user-select: none;
+  background-color: white;
+}
+
+.defaultOption {
+  display: flex;
+  border: 0.5px solid;
+  border-color: #ced4da;
+  border-radius: 5px;
+  width: inherit;
+  align-items: center;
+  justify-content: space-around;
+  padding: 6px 0;
+  cursor: pointer;
+  transition: background-color 0.2 ease-in-out;
+}
+
+.iconSize {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.selectOptionList {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  border: 0.5px solid #ced4da;
+  z-index: 1;
+  background-color: white;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  width: inherit;
+  list-style: none;
+}
+
+.selectOptionList li {
+  border-radius: inherit;
+  cursor: pointer;
+  margin: 0;
+  padding: 6px 10px;
+}
+
+.taskContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 30px;
 }

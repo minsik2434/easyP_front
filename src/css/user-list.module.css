@@ -1,0 +1,59 @@
+.container {
+  background-color: white;
+  height: 100%;
+  padding: 10px;
+  border-left: solid #e9ecef;
+  overflow-y: auto;
+}
+
+.search {
+  display: flex;
+  background-color: #fafafa;
+  border: #ced4da solid 0.5px;
+  border-radius: 10px;
+  padding: 3px 0;
+}
+
+.searchButton {
+  all: unset;
+  cursor: pointer;
+  border-radius: 40%;
+  padding: 2px 0;
+  transition: background-color 0.2s ease-in-out;
+}
+.search input {
+  border: none;
+  outline: none;
+  flex: 1;
+  user-select: none;
+  background-color: #fafafa;
+}
+.item {
+  padding: 10px 7px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.searchBarButtonIcon {
+  opacity: 50%;
+  width: 1.8rem;
+}
+.noValue {
+  visibility: hidden;
+}
+
+.search:hover .searchBarButtonIcon,
+.search:focus-within .searchBarButtonIcon {
+  opacity: 100%;
+}
+
+.userContainer {
+  padding: 10px 0;
+}
+
+.profileSize {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+}

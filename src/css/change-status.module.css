@@ -1,0 +1,18 @@
+.container {
+  padding: 10px;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.buttonWrapper button {
+  all: unset;
+  cursor: pointer;
+  padding: 5px 15px;
+  border-radius: 20px;
+  color: white;
+}
